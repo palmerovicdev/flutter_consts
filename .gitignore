@@ -43,10 +43,12 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+# Ignorar subdirectorios del ejemplo /example
 /example/build/cb31d188baab42a03ee440207ae3df5e/
 /example/build/flutter_assets/
 /example/build/macos/
 /example/build/native_assets/
+
 /example/android/
 /example/linux/
 /example/macos/

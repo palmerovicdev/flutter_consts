@@ -1,0 +1,30 @@
+{
+  "name": "consts",
+  "version": "1.0.0",
+  "description": "Flutter consts made easy.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/palmerovicdev/flutter_consts.git"
+  },
+  "keywords": [
+    "flutter",
+    "consts"
+  ],
+  "author": "palmerodev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/palmerovicdev/flutter_conts/issues"
+  },
+  "homepage": "https://github.com/palmerovicdev/flutter_consts#readme",
+  "dependencies": {
+    "cookie-parser": "~1.4.7",
+    "debug": "~4.4.3",
+    "express": "~5.1.0",
+    "morgan": "~1.10.1"
+  }
+}
