@@ -47,7 +47,6 @@ class _AnimationsScreenState extends State<AnimationsScreen> {
                 ),
 
                 SizedBox(height: isNarrow ? 32 : 48),
-
                 // AnimatedContainer Demo
                 buildExampleCard(
                   'AnimatedContainer',

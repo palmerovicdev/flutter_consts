@@ -55,10 +55,44 @@
 /// - [AppUI] - Acceso rápido a constantes comunes
 library constants;
 
+import 'package:consts/constants/app_font_sizes.dart';
+
+import 'app_durations.dart';
+
 export 'app_durations.dart';
 export 'app_font_sizes.dart';
 export 'app_radius.dart';
 export 'app_sizes.dart';
 export 'app_spacing.dart';
 export 'app_ui.dart';
+
+/// Punto de acceso central para todas las constantes de diseño
+///
+/// **Uso:**
+/// ```dart
+/// // Duraciones
+/// Consts.durations.base.md  // 300ms
+/// Consts.durations.feat.searchDebounce  // 300ms
+/// ```
+class Consts {
+  Consts._();
+
+  /// Sistema de duraciones para animaciones y transiciones
+  ///
+  /// **Uso:**
+  /// ```dart
+  /// // Duraciones base
+  /// AnimatedContainer(
+  ///   duration: Consts.durations.base.md,  // 300ms
+  ///   child: Widget(),
+  /// )
+  ///
+  /// // Duraciones específicas de features
+  /// Timer(Consts.durations.feat.searchDebounce, callback);
+  /// ```
+  static AppDurationsSystem get durations => AppDurationsSystem();
+
+  static FontSizesSystem get fontSizes => FontSizesSystem();
+}
+
 

@@ -1,62 +1,231 @@
-import 'package:flutter/cupertino.dart';
-
-/// Extension method on [BuildContext] to calculate responsive font sizes.
+/// Sistema de tipografía jerárquica y escalable para Flutter
 ///
-/// This extension provides a convenient way to calculate font sizes that scale
-/// proportionally based on screen width, ensuring better readability across
-/// different device sizes.
+/// Este módulo proporciona un sistema completo de tamaños de fuente basado en
+/// escalas geométricas y jerarquías tipográficas, permitiendo crear interfaces
+/// consistentes, legibles y profesionales.
 ///
-/// ### Example:
+/// ## 🎯 Componentes Principales
+///
+/// ### 1. [AppFontSizes] - Sistema de escala configurable
+/// Clase principal que genera una jerarquía tipográfica completa basada en:
+/// - Un tamaño base (`bodySmall`)
+/// - Un factor de escala geométrico
+///
+/// ### 2. [AppFontSizesConstants] - Valores constantes en tiempo de compilación
+/// Valores `const` predefinidos para uso en constructores constantes.
+///
+/// ### 3. [AppFontSizesPresets] - Configuraciones predefinidas
+/// Combinaciones listas para usar de tamaños base + factores de escala.
+///
+/// ### 4. [AppFontSizesScaleFactors] - Factores de escala disponibles
+/// Ratios geométricos para crear diferentes grados de jerarquía visual.
+///
+/// ### 5. [AppFontSizesExtension] - Tamaños responsivos por contexto
+/// Extension en `BuildContext` para calcular tamaños adaptativos.
+///
+/// ## 📐 Jerarquía Tipográfica
+///
+/// ```
+/// Nivel         Tamaño (14px base × 1.272)   Uso
+/// ─────────────────────────────────────────────────────────────
+/// display       121.4px                      Hero, splash screens
+/// h1            95.4px                       Títulos principales
+/// h2            75.0px                       Subtítulos de página
+/// h3            59.0px                       Secciones grandes
+/// header        46.4px                       Encabezados de sección
+/// subheader     36.5px                       Subsecciones
+/// paragraphTitle 28.7px                      Títulos de párrafo
+/// bodyLarge     22.6px                       Texto destacado
+/// body          17.8px                       Texto estándar ⭐
+/// bodySmall     14.0px                       Captions, metadata
+/// ```
+///
+/// ## 🚀 Inicio Rápido
+///
+/// ### Uso Básico (Valores Constantes)
 /// ```dart
+/// // Para constructores const y valores por defecto
 /// Text(
 ///   'Hello World',
+///   style: TextStyle(fontSize: AppFontSizesConstants.body), // 17.8px
+/// )
+/// ```
+///
+/// ### Uso con Presets (Recomendado)
+/// ```dart
+/// // Configuración predefinida con escala clara
+/// final typography = AppFontSizesPresets.normalLargeScale;
+///
+/// Text('Title', style: TextStyle(fontSize: typography.h1));
+/// Text('Body', style: TextStyle(fontSize: typography.body));
+/// ```
+///
+/// ### Uso Personalizado
+/// ```dart
+/// // Control total sobre base y escala
+/// final customTypography = AppFontSizes(
+///   bodySmall: 16,  // Base más grande para accesibilidad
+///   scaleFactor: AppFontSizesScaleFactors.large,  // Jerarquía clara
+/// );
+///
+/// Text('Custom', style: TextStyle(fontSize: customTypography.h2));
+/// ```
+///
+/// ### Tamaños Responsivos
+/// ```dart
+/// // Adaptación automática al tamaño de pantalla
+/// Text(
+///   'Responsive text',
 ///   style: TextStyle(
 ///     fontSize: context.getResponsiveFontSize(
-///       smallest: 12,
+///       smallest: 14,
 ///       largest: 24,
 ///     ),
 ///   ),
 /// )
 /// ```
 ///
-/// ### Recommendations:
-/// - Use for body text that needs to adapt across mobile, tablet, and desktop
-/// - For fixed UI elements (like icons), consider using [AppFontSizesConstants]
-/// - Combine with [AppFontSizesPresets] for consistent sizing across your app
+/// ## 🎨 Factores de Escala
+///
+/// | Factor | Valor | Jerarquía | Uso Ideal |
+/// |--------|-------|-----------|-----------|
+/// | `small` | 1.128 | Sutil | Tablas, layouts densos |
+/// | `normal` | 1.174 | Balanceada | Material Design |
+/// | `large` | 1.272 | Clara | Apps modernas ⭐ |
+/// | `extraLarge` | 1.618 | Dramática | Marketing, landing pages |
+///
+/// ## 📱 Presets Recomendados por Contexto
+///
+/// ### Mobile Apps
+/// ```dart
+/// // Estándar (recomendado)
+/// AppFontSizesPresets.normalLargeScale  // 14px + clara jerarquía
+///
+/// // Compacto
+/// AppFontSizesPresets.normal  // 14px + jerarquía sutil
+///
+/// // Accesibilidad
+/// AppFontSizesPresets.largeLargeScale  // 16px + clara jerarquía
+/// ```
+///
+/// ### Tablet Apps
+/// ```dart
+/// // Estándar
+/// AppFontSizesPresets.largeLargeScale  // 16px + clara jerarquía
+///
+/// // Lectura
+/// AppFontSizesPresets.extraLargeLargeScale  // 18px + clara jerarquía
+/// ```
+///
+/// ### Desktop Apps
+/// ```dart
+/// // Tablas/datos
+/// AppFontSizesPresets.small  // 12px + jerarquía sutil
+///
+/// // General
+/// AppFontSizesPresets.normalNormalScale  // 14px + jerarquía balanceada
+///
+/// // Marketing
+/// AppFontSizesPresets.normalExtraLargeScale  // 14px + jerarquía dramática
+/// ```
+///
+/// ## 💡 Mejores Prácticas
+///
+/// ### ✅ Hacer
+/// - Usar presets para consistencia
+/// - Elegir UN factor de escala por app
+/// - Usar `AppFontSizesConstants` en constructores const
+/// - Adaptar tamaño base según dispositivo
+/// - Combinar con `fontWeight` para énfasis
+///
+/// ### ❌ Evitar
+/// - Mezclar múltiples escalas en la misma app
+/// - Crear valores arbitrarios fuera del sistema
+/// - Usar tamaños muy pequeños (< 12px) sin razón
+/// - Ignorar accesibilidad en apps públicas
+///
+/// ## ♿ Accesibilidad
+///
+/// ```dart
+/// // Nivel 1: Texto ligeramente más grande
+/// final a11yLevel1 = AppFontSizesPresets.largeLargeScale;
+///
+/// // Nivel 2: Texto significativamente más grande
+/// final a11yLevel2 = AppFontSizesPresets.extraLargeLargeScale;
+///
+/// // Nivel 3: Máxima legibilidad
+/// final a11yLevel3 = AppFontSizesPresets.hugeLargeScale;
+///
+/// // Adaptativo según preferencias del sistema
+/// final userScaleFactor = MediaQuery.textScaleFactorOf(context);
+/// final fontSize = AppFontSizesConstants.body * userScaleFactor;
+/// ```
+///
+/// ## 🔗 Referencias
+///
+/// - [Material Design Type Scale](https://m3.material.io/styles/typography/type-scale-tokens)
+/// - [Type Scale Generator](https://type-scale.com/)
+/// - [Golden Ratio Typography](https://grtcalculator.com/)
+///
+/// ## Ver También
+///
+/// - [AppFontSizes] - Clase principal del sistema
+/// - [AppFontSizesPresets] - Configuraciones predefinidas
+/// - [AppFontSizesConstants] - Valores constantes
+/// - [AppFontSizesScaleFactors] - Factores de escala disponibles
+library app_font_sizes;
+
+import 'package:flutter/cupertino.dart';
+
+/// Extension en [BuildContext] para calcular tamaños de fuente responsivos.
+///
+/// Interpola linealmente tamaños de fuente según el ancho de pantalla,
+/// permitiendo tipografía que se adapta automáticamente a diferentes dispositivos.
+///
+/// **Uso:**
+/// ```dart
+/// Text(
+///   'Responsive',
+///   style: TextStyle(
+///     fontSize: context.getResponsiveFontSize(
+///       smallest: 14,
+///       largest: 24,
+///     ),
+///   ),
+/// )
+/// ```
+///
+/// **Cuándo usar:**
+/// - Texto adaptativo en tablets/desktop
+/// - Hero text que escala con dispositivo
+/// - Interfaces multi-plataforma
+///
+/// Ver también: [AppFontSizesPresets] para tamaños fijos
 extension AppFontSizesExtension on BuildContext {
-  /// Calculates a responsive font size based on screen width.
+  /// Calcula tamaño de fuente responsivo basado en ancho de pantalla.
   ///
-  /// The font size interpolates linearly between [smallest] and [largest]
-  /// based on the current screen width relative to [smallestScreenSize]
-  /// and [largestScreenSize].
+  /// Interpola entre [smallest] y [largest] según ancho actual en relación
+  /// a [smallestScreenSize] y [largestScreenSize].
   ///
-  /// ### Parameters:
-  /// - [smallest]: The minimum font size (default: 12)
-  /// - [largest]: The maximum font size (default: 20)
-  /// - [smallestScreenSize]: The screen width for minimum font size (default: 320)
-  /// - [largestScreenSize]: The screen width for maximum font size (default: 1920)
+  /// **Parámetros:**
+  /// - [smallest]: Tamaño mínimo (default: 12px)
+  /// - [largest]: Tamaño máximo (default: 20px)
+  /// - [smallestScreenSize]: Ancho para mínimo (default: 320px)
+  /// - [largestScreenSize]: Ancho para máximo (default: 1920px)
   ///
-  /// ### Returns:
-  /// A [double] representing the calculated font size in logical pixels.
-  ///
-  /// ### Example:
+  /// **Ejemplo:**
   /// ```dart
-  /// // Basic usage with defaults
-  /// final fontSize = context.getResponsiveFontSize();
+  /// // Básico
+  /// context.getResponsiveFontSize()
   ///
-  /// // Custom range for headings
-  /// final headingSize = context.getResponsiveFontSize(
-  ///   smallest: 24,
-  ///   largest: 48,
-  /// );
+  /// // Headings
+  /// context.getResponsiveFontSize(smallest: 24, largest: 48)
   ///
-  /// // Custom screen size range for tablets only
-  /// final tabletSize = context.getResponsiveFontSize(
-  ///   smallest: 14,
-  ///   largest: 18,
-  ///   smallestScreenSize: 600,
-  ///   largestScreenSize: 1200,
-  /// );
+  /// // Solo tablets (600-1200px)
+  /// context.getResponsiveFontSize(
+  ///   smallest: 14, largest: 18,
+  ///   smallestScreenSize: 600, largestScreenSize: 1200,
+  /// )
   /// ```
   double getResponsiveFontSize({
     double? smallest,
@@ -71,79 +240,60 @@ extension AppFontSizesExtension on BuildContext {
     return smallest + (largest - smallest) * (screenWidth - smallestScreenSize) / (largestScreenSize - smallestScreenSize);
   }
 }
-
-/// A flexible font sizing system with hierarchical typography scales.
+/// Sistema flexible de tipografía con jerarquía escalable geométricamente.
 ///
-/// This class provides a complete typographic scale based on a customizable
-/// base size ([bodySmall]) and a geometric scale factor. It follows a
-/// consistent progression from small body text to large display headings.
+/// Genera una escala tipográfica completa basada en un tamaño base ([bodySmall])
+/// y un factor de escala geométrico. Cada nivel es el anterior multiplicado
+/// por el factor de escala, creando progresión armónica.
 ///
-/// ### Typography Hierarchy (from smallest to largest):
-/// 1. **bodySmall** - Smallest readable text (captions, footnotes)
-/// 2. **body** - Standard body text (paragraphs, lists)
-/// 3. **bodyLarge** - Emphasized body text
-/// 4. **paragraphTitle** - Small headings within paragraphs
-/// 5. **subheader** - Section subheadings
-/// 6. **header** - Main section headings
-/// 7. **h3** - Third-level headings
-/// 8. **h2** - Second-level headings
-/// 9. **h1** - Top-level headings
-/// 10. **display** - Hero text, large titles
+/// **Jerarquía (10 niveles):**
+/// bodySmall < body < bodyLarge < paragraphTitle < subheader < header < h3 < h2 < h1 < display
 ///
-/// ### Usage:
+/// **Uso:**
 /// ```dart
-/// // Create a custom font size scale
-/// final customSizes = AppFontSizes(
+/// // Instancia personalizada
+/// final typography = AppFontSizes(
 ///   bodySmall: 16,
 ///   scaleFactor: AppFontSizesScaleFactors.normal,
 /// );
 ///
-/// Text(
-///   'Heading',
-///   style: TextStyle(fontSize: customSizes.h1),
-/// );
-///
-/// Text(
-///   'Body text',
-///   style: TextStyle(fontSize: customSizes.body),
-/// );
+/// Text('Title', style: TextStyle(fontSize: typography.h1));
+/// Text('Body', style: TextStyle(fontSize: typography.body));
 /// ```
 ///
-/// ### Recommendations:
-/// - Use [AppFontSizesPresets] for common size configurations
-/// - Use [AppFontSizesConstants] for compile-time constant values
-/// - Choose a [scaleFactor] based on your design system:
-///   - `small` (1.13): Compact, information-dense layouts
-///   - `normal` (1.17): Balanced, general-purpose
-///   - `large` (1.27): Clear hierarchy, better readability
-///   - `extraLarge` (1.62): Golden ratio, maximum distinction
+/// **Recomendaciones:**
+/// - Usa [AppFontSizesPresets] para configuraciones predefinidas
+/// - Usa [AppFontSizesConstants] para valores `const`
+/// - Elige UN [scaleFactor] por app para consistencia
+/// - Factores disponibles:
+///   - `small` (1.128): Denso, compacto
+///   - `normal` (1.174): Balanceado, Material Design
+///   - `large` (1.272): Clara jerarquía, moderno ⭐
+///   - `extraLarge` (1.618): Dramático, marketing
 ///
-/// ### See also:
-/// - [AppFontSizesPresets] for ready-to-use size configurations
-/// - [AppFontSizesScaleFactors] for available scale factor options
-/// - [AppFontSizesConstants] for compile-time constant font sizes
+/// Ver también: [AppFontSizesPresets], [AppFontSizesScaleFactors]
 class AppFontSizes {
-  /// Creates a font sizing system with the specified base size and scale factor.
+  /// Crea un sistema de tipografía con base y escala especificadas.
   ///
-  /// ### Parameters:
-  /// - [bodySmall]: The base font size in logical pixels (default: 14)
-  /// - [scaleFactor]: The multiplier between each level (default: 1.27)
+  /// **Parámetros:**
+  /// - [bodySmall]: Tamaño base en px (default: 14)
+  /// - [scaleFactor]: Multiplicador entre niveles (default: 1.272)
   ///
-  /// ### Example:
+  /// **Ejemplo:**
   /// ```dart
-  /// // Default configuration
-  /// final defaultSizes = AppFontSizes();
+  /// // Por defecto (14px + escala large)
+  /// AppFontSizes()
   ///
-  /// // Larger base size for accessibility
-  /// final accessibleSizes = AppFontSizes(bodySmall: 18);
+  /// // Accesibilidad (base más grande)
+  /// AppFontSizes(bodySmall: 18)
   ///
-  /// // Tighter scale for compact layouts
-  /// final compactSizes = AppFontSizes(
+  /// // Compacto (base pequeña + escala sutil)
+  /// AppFontSizes(
   ///   bodySmall: 12,
   ///   scaleFactor: AppFontSizesScaleFactors.small,
-  /// );
+  /// )
   /// ```
-  AppFontSizes({
+  const AppFontSizes({
     double bodySmall = AppFontSizesConstants.bodySmall,
     double scaleFactor = AppFontSizesScaleFactors.large,
   })  : _scaleFactor = scaleFactor,
@@ -152,654 +302,334 @@ class AppFontSizes {
   final double _bodySmall;
   final double _scaleFactor;
 
-  /// The smallest text size in the hierarchy.
+  /// **bodySmall** - Texto más pequeño (base)
   ///
-  /// **Size:** Base size (default: 14px)
+  /// Tamaño: Base (default: 14px)
   ///
-  /// **Use cases:**
-  /// - Captions and labels
-  /// - Footnotes and disclaimers
-  /// - Helper text and hints
-  /// - Timestamps and metadata
-  ///
-  /// **Example:**
-  /// ```dart
-  /// Text(
-  ///   'Updated 5 mins ago',
-  ///   style: TextStyle(
-  ///     fontSize: appFontSizes.bodySmall,
-  ///     color: Colors.grey,
-  ///   ),
-  /// )
-  /// ```
+  /// Uso: Captions, footnotes, metadata, timestamps, helper text
   double get bodySmall => _bodySmall;
 
-  /// Standard body text size.
+  /// **body** - Texto estándar ⭐
   ///
-  /// **Size:** bodySmall × scaleFactor (default: 14 × 1.27 = ~17.8px)
+  /// Tamaño: bodySmall × scaleFactor (~17.8px)
   ///
-  /// **Use cases:**
-  /// - Main paragraph text
-  /// - List items
-  /// - Form inputs
-  /// - Button labels
-  ///
-  /// **Example:**
-  /// ```dart
-  /// Text(
-  ///   'This is a paragraph of body text...',
-  ///   style: TextStyle(fontSize: appFontSizes.body),
-  /// )
-  /// ```
+  /// Uso: Párrafos, listas, inputs, botones
   double get body => bodySmall * _scaleFactor;
 
-  /// Emphasized or larger body text.
+  /// **bodyLarge** - Texto destacado
   ///
-  /// **Size:** body × scaleFactor (default: 17.8 × 1.27 = ~22.6px)
+  /// Tamaño: body × scaleFactor (~22.6px)
   ///
-  /// **Use cases:**
-  /// - Lead paragraphs
-  /// - Callouts and quotes
-  /// - Emphasized information
-  /// - Large button text
-  ///
-  /// **Example:**
-  /// ```dart
-  /// Text(
-  ///   'Important message here',
-  ///   style: TextStyle(
-  ///     fontSize: appFontSizes.bodyLarge,
-  ///     fontWeight: FontWeight.w500,
-  ///   ),
-  /// )
-  /// ```
+  /// Uso: Lead paragraphs, callouts, citas, texto enfatizado
   double get bodyLarge => body * _scaleFactor;
 
-  /// Small headings within content blocks.
+  /// **paragraphTitle** - Títulos pequeños
   ///
-  /// **Size:** bodyLarge × scaleFactor (default: 22.6 × 1.27 = ~28.7px)
+  /// Tamaño: bodyLarge × scaleFactor (~28.7px)
   ///
-  /// **Use cases:**
-  /// - Paragraph titles
-  /// - Card titles
-  /// - List section headers
-  /// - Small component headings
-  ///
-  /// **Example:**
-  /// ```dart
-  /// Text(
-  ///   'Section Title',
-  ///   style: TextStyle(
-  ///     fontSize: appFontSizes.paragraphTitle,
-  ///     fontWeight: FontWeight.bold,
-  ///   ),
-  /// )
-  /// ```
+  /// Uso: Títulos de cards, headers de listas, secciones pequeñas
   double get paragraphTitle => bodyLarge * _scaleFactor;
 
-  /// Subheadings for content sections.
+  /// **subheader** - Subtítulos de sección
   ///
-  /// **Size:** paragraphTitle × scaleFactor (default: 28.7 × 1.27 = ~36.5px)
+  /// Tamaño: paragraphTitle × scaleFactor (~36.5px)
   ///
-  /// **Use cases:**
-  /// - Subsection headings
-  /// - Dialog titles
-  /// - Bottom sheet headers
-  /// - Tab labels (when large)
-  ///
-  /// **Example:**
-  /// ```dart
-  /// AppBar(
-  ///   title: Text(
-  ///     'Settings',
-  ///     style: TextStyle(fontSize: appFontSizes.subheader),
-  ///   ),
-  /// )
-  /// ```
+  /// Uso: Subsecciones, dialog titles, bottom sheets, tabs grandes
   double get subheader => paragraphTitle * _scaleFactor;
 
-  /// Main section headings.
+  /// **header** - Encabezados principales
   ///
-  /// **Size:** subheader × scaleFactor (default: 36.5 × 1.27 = ~46.4px)
+  /// Tamaño: subheader × scaleFactor (~46.4px)
   ///
-  /// **Use cases:**
-  /// - Page section headers
-  /// - Main navigation items
-  /// - Feature titles
-  /// - App bar titles
-  ///
-  /// **Example:**
-  /// ```dart
-  /// Text(
-  ///   'Main Section',
-  ///   style: TextStyle(
-  ///     fontSize: appFontSizes.header,
-  ///     fontWeight: FontWeight.w600,
-  ///   ),
-  /// )
-  /// ```
+  /// Uso: Section headers, app bar titles, navegación principal
   double get header => subheader * _scaleFactor;
 
-  /// Third-level heading (H3).
+  /// **h3** - Heading nivel 3
   ///
-  /// **Size:** header × scaleFactor (default: 46.4 × 1.27 = ~59.0px)
+  /// Tamaño: header × scaleFactor (~59.0px)
   ///
-  /// **Use cases:**
-  /// - Large section titles
-  /// - Feature headings
-  /// - Modal titles
-  /// - Card headers (large)
-  ///
-  /// **Example:**
-  /// ```dart
-  /// Text(
-  ///   'Feature Heading',
-  ///   style: TextStyle(fontSize: appFontSizes.h3),
-  /// )
-  /// ```
+  /// Uso: Títulos de sección grande, modals, feature headings
   double get h3 => header * _scaleFactor;
 
-  /// Second-level heading (H2).
+  /// **h2** - Heading nivel 2
   ///
-  /// **Size:** h3 × scaleFactor (default: 59.0 × 1.27 = ~75.0px)
+  /// Tamaño: h3 × scaleFactor (~75.0px)
   ///
-  /// **Use cases:**
-  /// - Page subtitles
-  /// - Major section dividers
-  /// - Welcome messages
-  /// - Feature highlights
-  ///
-  /// **Example:**
-  /// ```dart
-  /// Text(
-  ///   'Welcome Back!',
-  ///   style: TextStyle(
-  ///     fontSize: appFontSizes.h2,
-  ///     fontWeight: FontWeight.bold,
-  ///   ),
-  /// )
-  /// ```
+  /// Uso: Subtítulos de página, welcome messages, divisores mayores
   double get h2 => h3 * _scaleFactor;
 
-  /// Top-level heading (H1).
+  /// **h1** - Heading nivel 1
   ///
-  /// **Size:** h2 × scaleFactor (default: 75.0 × 1.27 = ~95.3px)
+  /// Tamaño: h2 × scaleFactor (~95.3px)
   ///
-  /// **Use cases:**
-  /// - Page titles
-  /// - Screen headers
-  /// - Main headings
-  /// - Primary CTAs
-  ///
-  /// **Example:**
-  /// ```dart
-  /// Text(
-  ///   'Dashboard',
-  ///   style: TextStyle(
-  ///     fontSize: appFontSizes.h1,
-  ///     fontWeight: FontWeight.bold,
-  ///   ),
-  /// )
-  /// ```
+  /// Uso: Títulos de página, screen headers, CTAs principales
   double get h1 => h2 * _scaleFactor;
 
-  /// Display text for hero sections and large titles.
+  /// **display** - Texto hero/display
   ///
-  /// **Size:** h1 × scaleFactor (default: 95.3 × 1.27 = ~121.1px)
+  /// Tamaño: h1 × scaleFactor (~121.1px)
   ///
-  /// **Use cases:**
-  /// - Hero text
-  /// - Splash screen titles
-  /// - Onboarding headings
-  /// - Marketing headers
-  /// - Empty state messages
+  /// Uso: Hero sections, splash screens, onboarding, marketing headers
   ///
-  /// **Example:**
-  /// ```dart
-  /// Text(
-  ///   'Get Started',
-  ///   style: TextStyle(
-  ///     fontSize: appFontSizes.display,
-  ///     fontWeight: FontWeight.bold,
-  ///     letterSpacing: -0.5,
-  ///   ),
-  /// )
-  /// ```
-  ///
-  /// **Note:** Display sizes may need to be reduced on smaller screens
-  /// to prevent overflow. Consider using [AppFontSizesExtension.getResponsiveFontSize].
+  /// ⚠️ Puede requerir reducción en pantallas pequeñas
   double get display => h1 * _scaleFactor;
 }
 
-
-/// Compile-time constant font sizes using the default configuration.
+/// Tamaños de fuente constantes (compile-time) con configuración por defecto.
 ///
-/// This class provides `const` font size values that can be used in
-/// compile-time constant expressions, unlike [AppFontSizes] which is
-/// instantiated at runtime.
+/// Valores `const` calculados con base 14px y escala large (1.272).
+/// Úsalos cuando necesites expresiones constantes en tiempo de compilación.
 ///
-/// All values are calculated using:
-/// - Base size: 14 pixels
-/// - Scale factor: 1.27 (large)
+/// **Cuándo usar:**
+/// - ✅ `AppFontSizesConstants`: Constructores const, valores por defecto
+/// - ✅ `AppFontSizes`: Configuración runtime, tamaños dinámicos
+/// - ✅ `AppFontSizesPresets`: Configuraciones predefinidas listas para usar
 ///
-/// ### When to use:
-/// - **Use [AppFontSizesConstants]** when you need compile-time constants
-///   (e.g., in const constructors, default parameter values)
-/// - **Use [AppFontSizes]** when you need runtime flexibility
-///   (e.g., dynamic sizing, user preferences)
-///
-/// ### Example:
+/// **Ejemplo:**
 /// ```dart
-/// // ✅ Good: Compile-time constant
-/// const TextStyle(
-///   fontSize: AppFontSizesConstants.body,
-/// );
+/// // ✅ Correcto: const constructor
+/// const TextStyle(fontSize: AppFontSizesConstants.body)
 ///
-/// // ✅ Good: Default parameter value
-/// Widget buildText({
-///   double fontSize = AppFontSizesConstants.body,
-/// }) { ... }
+/// // ✅ Correcto: default parameter
+/// Widget buildText({double fontSize = AppFontSizesConstants.body}) {...}
 ///
-/// // ❌ Won't work with AppFontSizes (not const)
-/// const TextStyle(
-///   fontSize: AppFontSizes().body, // Error!
-/// );
+/// // ❌ Error: AppFontSizes no es const
+/// const TextStyle(fontSize: AppFontSizes().body)  // No compila
 /// ```
 ///
-/// ### Recommendations:
-/// - Prefer [AppFontSizesConstants] for theme definitions
-/// - Use [AppFontSizes] for dynamic or user-configurable sizing
-/// - Use [AppFontSizesPresets] for predefined size sets
-///
-/// ### See also:
-/// - [AppFontSizes] for runtime-configurable font sizes
-/// - [AppFontSizesPresets] for preset size configurations
+/// Ver también: [AppFontSizes], [AppFontSizesPresets]
 class AppFontSizesConstants {
-  /// Base font size: 14.0px - Captions, footnotes, metadata
+  /// 14.0px - bodySmall (base)
   static const double bodySmall = 14;
 
-  /// Standard body text: 17.8px (14 × 1.272) - Paragraphs, lists, buttons
+  /// 17.8px - body (14 × 1.272)
   static const double body = bodySmall * AppFontSizesScaleFactors.large;
 
-  /// Large body text: 22.6px (17.8 × 1.272) - Emphasized text, callouts
+  /// 22.6px - bodyLarge (17.8 × 1.272)
   static const double bodyLarge = body * AppFontSizesScaleFactors.large;
 
-  /// Paragraph titles: 28.7px (22.6 × 1.272) - Card titles, list headers
+  /// 28.7px - paragraphTitle (22.6 × 1.272)
   static const double paragraphTitle = bodyLarge * AppFontSizesScaleFactors.large;
 
-  /// Subheadings: 36.5px (28.7 × 1.272) - Dialog titles, subsection headers
+  /// 36.5px - subheader (28.7 × 1.272)
   static const double subheader = paragraphTitle * AppFontSizesScaleFactors.large;
 
-  /// Main headings: 46.4px (36.5 × 1.272) - Section headers, app bar titles
+  /// 46.4px - header (36.5 × 1.272)
   static const double header = subheader * AppFontSizesScaleFactors.large;
 
-  /// H3 headings: 59.0px (46.4 × 1.272) - Large section titles, modal titles
+  /// 59.0px - h3 (46.4 × 1.272)
   static const double h3 = header * AppFontSizesScaleFactors.large;
 
-  /// H2 headings: 75.0px (59.0 × 1.272) - Page subtitles, major sections
+  /// 75.0px - h2 (59.0 × 1.272)
   static const double h2 = h3 * AppFontSizesScaleFactors.large;
 
-  /// H1 headings: 95.4px (75.0 × 1.272) - Page titles, main headings
+  /// 95.4px - h1 (75.0 × 1.272)
   static const double h1 = h2 * AppFontSizesScaleFactors.large;
 
-  /// Display text: 121.4px (95.4 × 1.272) - Hero text, splash screens
+  /// 121.4px - display (95.4 × 1.272)
   static const double display = h1 * AppFontSizesScaleFactors.large;
 }
 
-
-/// Predefined scale factors for typographic hierarchies.
+/// Factores de escala predefinidos para jerarquías tipográficas.
 ///
-/// Scale factors determine the size ratio between consecutive levels in the
-/// typography hierarchy. A larger scale factor creates more visual distinction
-/// between heading levels.
+/// Determinan el ratio de tamaño entre niveles consecutivos.
+/// Un factor mayor = mayor distinción visual entre headings.
 ///
-/// ### Available Scales:
+/// **Escalas Disponibles:**
 ///
-/// | Scale | Factor | Description | Best For |
-/// |-------|--------|-------------|----------|
-/// | **small** | 1.128 | Minor Second | Dense layouts, data tables |
-/// | **normal** | 1.174 | Major Second | Balanced UIs, forms |
-/// | **large** | 1.272 | Minor Third | Clear hierarchy, marketing |
-/// | **extraLarge** | 1.618 | Golden Ratio | Maximum contrast, landing pages |
+/// | Escala | Factor | Jerarquía | Mejor Para |
+/// |--------|--------|-----------|------------|
+/// | `small` | 1.128 | Sutil | Tablas, UIs densas |
+/// | `normal` | 1.174 | Balanceada | Material Design |
+/// | `large` | 1.272 | Clara | Apps modernas ⭐ |
+/// | `extraLarge` | 1.618 | Dramática | Marketing, landing pages |
 ///
-/// ### Visual Comparison:
+/// **Comparación Visual (base 14px):**
 /// ```
-/// Scale Factor Impact (base = 14px):
-///
-/// small (1.128):
-///   display: 28px
-///   h1: 25px
-///   h2: 22px
-///   body: 14px
-///
-/// normal (1.174):
-///   display: 33px
-///   h1: 28px
-///   h2: 24px
-///   body: 14px
-///
-/// large (1.272):
-///   display: 48px
-///   h1: 38px
-///   h2: 30px
-///   body: 14px
-///
-/// extraLarge (1.618):
-///   display: 97px
-///   h1: 60px
-///   h2: 37px
-///   body: 14px
+///              display  h1   h2   body
+/// small:       42px    37px  33px  14px
+/// normal:      59px    51px  43px  14px
+/// large:       121px   95px  75px  18px
+/// extraLarge:  1064px  657px 406px 23px
 /// ```
 ///
-/// ### Choosing a Scale Factor:
+/// **Guía de Selección:**
 ///
-/// **Use `small` (1.128) when:**
-/// - Building data-heavy interfaces
-/// - Space is limited (mobile, compact views)
-/// - Displaying tables or grids
-/// - Need subtle hierarchy
+/// - `small` → Información densa, espacio limitado
+/// - `normal` → UIs balanceadas, Material Design
+/// - `large` → Jerarquía clara, contenido moderno (DEFAULT) ⭐
+/// - `extraLarge` → Impacto visual máximo, uso ocasional
 ///
-/// **Use `normal` (1.174) when:**
-/// - Building general-purpose UIs
-/// - Need balanced, harmonious design
-/// - Following Material Design guidelines
-/// - Creating forms and settings screens
-///
-/// **Use `large` (1.272) - DEFAULT when:**
-/// - Need clear visual hierarchy
-/// - Building content-focused apps
-/// - Following modern design trends
-/// - Want good readability
-///
-/// **Use `extraLarge` (1.618) when:**
-/// - Creating marketing/landing pages
-/// - Need dramatic size differences
-/// - Building hero sections
-/// - Want maximum visual impact
-///
-/// ### Example:
+/// **Ejemplo:**
 /// ```dart
-/// // Subtle hierarchy for data tables
-/// final compactSizes = AppFontSizes(
-///   bodySmall: 12,
-///   scaleFactor: AppFontSizesScaleFactors.small,
-/// );
+/// // Sutil para datos
+/// AppFontSizes(bodySmall: 12, scaleFactor: AppFontSizesScaleFactors.small)
 ///
-/// // Dramatic hierarchy for landing page
-/// final heroSizes = AppFontSizes(
-///   bodySmall: 16,
-///   scaleFactor: AppFontSizesScaleFactors.extraLarge,
-/// );
+/// // Dramático para hero
+/// AppFontSizes(bodySmall: 16, scaleFactor: AppFontSizesScaleFactors.extraLarge)
 /// ```
 ///
-/// ### Recommendations:
-/// - Start with `large` (default) for most applications
-/// - Use `normal` for Material Design compliance
-/// - Use `small` only when space is critically limited
-/// - Use `extraLarge` sparingly, mainly for marketing content
-/// - Maintain consistency - don't mix scale factors within the same app
-///
-/// ### See also:
-/// - [AppFontSizes] to apply these scale factors
-/// - [Type Scale Calculator](https://type-scale.com/) for visualization
+/// Ver también: [Type Scale Calculator](https://type-scale.com/)
 class AppFontSizesScaleFactors {
-  /// Minor Second scale (1.128) - Compact, subtle hierarchy.
+  /// 1.128 (Minor Second) - Jerarquía sutil y compacta
   ///
-  /// Creates minimal size differences between levels. Best for
-  /// information-dense layouts where space is limited.
+  /// Uso: Tablas, dashboards densos, admin panels
   ///
-  /// **Progression:** 12, 13.5, 15.2, 17.2, 19.4, 21.9, 24.7, 27.9...
+  /// Progresión: 12 → 13.5 → 15.2 → 17.2 → 19.4 → 21.9...
   static const double small = 1.1278422438;
 
-  /// Major Second scale (1.174) - Balanced, harmonious hierarchy.
+  /// 1.174 (Major Second) - Jerarquía balanceada y armónica
   ///
-  /// Creates moderate size differences. Commonly used in Material Design
-  /// and general-purpose applications.
+  /// Uso: Material Design, apps general-purpose, forms
   ///
-  /// **Progression:** 12, 14.1, 16.5, 19.4, 22.8, 26.7, 31.4, 36.9...
+  /// Progresión: 12 → 14.1 → 16.5 → 19.4 → 22.8 → 26.7...
   static const double normal = 1.1739902127;
 
-  /// Minor Third scale (1.272) - Clear, readable hierarchy. **DEFAULT**
+  /// 1.272 (Minor Third) - Jerarquía clara y legible (DEFAULT) ⭐
   ///
-  /// Creates noticeable size differences while maintaining readability.
-  /// Recommended for most applications and content-focused designs.
+  /// Uso: Apps modernas, contenido, diseños con buena jerarquía
   ///
-  /// **Progression:** 12, 15.3, 19.4, 24.7, 31.4, 40.0, 50.8, 64.7...
+  /// Progresión: 12 → 15.3 → 19.4 → 24.7 → 31.4 → 40.0...
   static const double large = 1.2720281269;
 
-  /// Golden Ratio scale (1.618) - Dramatic, impactful hierarchy.
+  /// 1.618 (Golden Ratio) - Jerarquía dramática y impactante
   ///
-  /// Creates maximum visual distinction between levels. Best for
-  /// marketing pages, hero sections, and high-impact designs.
+  /// Uso: Marketing, landing pages, hero sections, alto impacto visual
   ///
-  /// **Progression:** 12, 19.4, 31.4, 50.8, 82.2, 133.0, 215.2, 348.3...
+  /// Progresión: 12 → 19.4 → 31.4 → 50.8 → 82.2 → 133.0...
+  ///
+  /// ⚠️ Usar con moderación, puede ser excesivo para UIs regulares
   static const double extraLarge = 1.6180555556;
 }
 
-
-/// Predefined font size configurations for common use cases.
+/// Configuraciones predefinidas de tipografía listas para usar.
 ///
-/// This class provides ready-to-use [AppFontSizes] instances with different
-/// base sizes and scale factors, making it easy to switch between size presets
-/// for different contexts like accessibility, device types, or user preferences.
+/// Combina diferentes tamaños base (12-20px) con factores de escala (small-extraLarge)
+/// para crear configuraciones completas optimizadas para casos de uso comunes.
 ///
-/// ### Available Base Sizes:
+/// **Estructura de nombres:**
+/// `[tamaño base][factor de escala (opcional)]`
 ///
-/// | Base | Size | Use Case |
-/// |------|------|----------|
-/// | **small** | 12px | Compact UIs, dense information |
-/// | **normal** | 14px | Standard mobile apps (DEFAULT) |
-/// | **large** | 16px | Enhanced readability, tablets |
-/// | **extraLarge** | 18px | Accessibility, large screens |
-/// | **huge** | 20px | Maximum accessibility, presentations |
+/// **Tamaños base disponibles:**
+/// - `small` (12px): Compacto, denso
+/// - `normal` (14px): Estándar mobile ⭐
+/// - `large` (16px): Legibilidad mejorada
+/// - `extraLarge` (18px): Accesibilidad
+/// - `huge` (20px): Máxima accesibilidad
 ///
-/// ### Scale Factor Variants:
+/// **Variantes de escala (sufijos):**
+/// - Sin sufijo: `small` scale (1.128) - jerarquía sutil
+/// - `NormalScale`: `normal` scale (1.174) - balanceada
+/// - `LargeScale`: `large` scale (1.272) - clara ⭐
+/// - `ExtraLargeScale`: `extraLarge` scale (1.618) - dramática
 ///
-/// Each base size has 4 scale factor variants:
-/// - **[base]** - Uses small scale (1.128) for subtle hierarchy
-/// - **[base]NormalScale** - Uses normal scale (1.174) for balanced hierarchy
-/// - **[base]LargeScale** - Uses large scale (1.272) for clear hierarchy ⭐
-/// - **[base]ExtraLargeScale** - Uses golden ratio (1.618) for dramatic impact
+/// **Guía Rápida por Contexto:**
 ///
-/// ### Quick Reference Table:
-/// ```
-/// Base Size Presets (with large scale 1.272):
-///
-///          bodySmall  body   h1     display
-/// small:   12px      15px   38px   61px
-/// normal:  14px      18px   44px   71px
-/// large:   16px      20px   51px   81px
-/// xLarge:  18px      23px   57px   91px
-/// huge:    20px      25px   64px   102px
-/// ```
-///
-/// ### Example Usage:
 /// ```dart
-/// // Use default presets (with small scale for compact hierarchy)
-/// final fontSizes = AppFontSizesPresets.normal;
+/// // Mobile Apps
+/// AppFontSizesPresets.normalLargeScale  // ⭐ Recomendado
+/// AppFontSizesPresets.normal            // Compacto
+/// AppFontSizesPresets.largeLargeScale   // Accesibilidad
 ///
-/// // Use with different scale for more dramatic hierarchy
-/// final fontSizes = AppFontSizesPresets.normalLargeScale;
+/// // Tablet Apps
+/// AppFontSizesPresets.largeLargeScale
+/// AppFontSizesPresets.extraLargeLargeScale  // Lectura
 ///
-/// // Switch based on user preference
-/// final userPreference = 'large';
-/// final fontSizes = switch (userPreference) {
-///   'small' => AppFontSizesPresets.small,
-///   'normal' => AppFontSizesPresets.normalLargeScale,
+/// // Desktop Apps
+/// AppFontSizesPresets.small              // Datos densos
+/// AppFontSizesPresets.normalNormalScale  // General
+/// AppFontSizesPresets.normalExtraLargeScale  // Marketing
+/// ```
+///
+/// **Ejemplo de Uso:**
+/// ```dart
+/// // Configuración basada en preferencia del usuario
+/// final typography = switch (userPreference) {
+///   'small' => AppFontSizesPresets.normal,
+///   'medium' => AppFontSizesPresets.normalLargeScale,
 ///   'large' => AppFontSizesPresets.largeLargeScale,
 ///   'extraLarge' => AppFontSizesPresets.extraLargeLargeScale,
 ///   _ => AppFontSizesPresets.normalLargeScale,
 /// };
 ///
-/// // Combine size and scale for fine-tuned control
-/// final compactData = AppFontSizesPresets.small; // 12px + small scale
-/// final readableContent = AppFontSizesPresets.largeLargeScale; // 16px + large scale
-/// final heroSection = AppFontSizesPresets.normalExtraLargeScale; // 14px + golden ratio
+/// Text('Title', style: TextStyle(fontSize: typography.h1));
 /// ```
 ///
-/// ### Recommendations by Use Case:
-///
-/// **Mobile Apps:**
-/// - Default: `normalLargeScale` (14px + clear hierarchy)
-/// - Compact: `normal` (14px + subtle hierarchy)
-/// - Accessibility: `largeLargeScale` or `extraLargeLargeScale`
-///
-/// **Tablet Apps:**
-/// - Default: `largeLargeScale` (16px + clear hierarchy)
-/// - Reading apps: `extraLargeLargeScale`
-///
-/// **Desktop Apps:**
-/// - Data-heavy: `small` or `smallNormalScale`
-/// - Standard: `normalNormalScale`
-/// - Marketing: `normalExtraLargeScale`
-///
-/// **Accessibility:**
-/// - Level 1: `largeLargeScale`
-/// - Level 2: `extraLargeLargeScale`
-/// - Level 3: `hugeLargeScale`
-///
-/// ### See also:
-/// - [AppFontSizes] for custom configurations
-/// - [AppFontSizesScaleFactors] for available scale factors
-/// - [AppFontSizesConstants] for compile-time constants
+/// Ver también: [AppFontSizes], [AppFontSizesScaleFactors]
 class AppFontSizesPresets {
-  // ============================================
-  // SMALL BASE (12px) - Compact UIs
-  // ============================================
+  // ============ SMALL BASE (12px) ============
 
-  /// Compact 12px base with small scale (1.128) - Most subtle hierarchy.
+  /// 12px + sutil (1.128)
   ///
-  /// **Best for:**
-  /// - Data tables with many columns
-  /// - Dense dashboards
-  /// - Admin panels with lots of information
-  /// - Desktop apps where space is critical
-  ///
-  /// **Sizes:** bodySmall: 12.0px, body: 13.5px, bodyLarge: 15.2px, paragraphTitle: 17.2px,
-  /// subheader: 19.4px, header: 21.9px, h3: 24.7px, h2: 27.9px, h1: 31.5px, display: 35.5px
+  /// Uso: Tablas densas, admin panels, dashboards con mucha información
   static final small = AppFontSizes(
     bodySmall: 12,
     scaleFactor: AppFontSizesScaleFactors.small,
   );
 
-  /// Compact 12px base with normal scale (1.174) - Balanced compact layout.
+  /// 12px + balanceada (1.174)
   ///
-  /// **Best for:**
-  /// - Compact mobile views
-  /// - Settings screens with many options
-  /// - Forms with limited space
-  ///
-  /// **Sizes:** bodySmall: 12.0px, body: 14.1px, bodyLarge: 16.5px, paragraphTitle: 19.4px,
-  /// subheader: 22.8px, header: 26.7px, h3: 31.4px, h2: 36.8px, h1: 43.2px, display: 50.8px
+  /// Uso: Mobile compacto, settings con muchas opciones, forms limitados
   static final smallNormalScale = AppFontSizes(
     bodySmall: 12,
     scaleFactor: AppFontSizesScaleFactors.normal,
   );
 
-  /// Compact 12px base with large scale (1.272) - Clear hierarchy in small space.
+  /// 12px + clara (1.272)
   ///
-  /// **Best for:**
-  /// - Compact UIs with clear heading distinction
-  /// - Small screen devices with good typography
-  /// - Mobile apps targeting small devices
-  ///
-  /// **Sizes:** bodySmall: 12.0px, body: 15.3px, bodyLarge: 19.4px, paragraphTitle: 24.7px,
-  /// subheader: 31.4px, header: 40.0px, h3: 50.9px, h2: 64.7px, h1: 82.3px, display: 104.7px
+  /// Uso: UIs compactas con jerarquía clara, mobile small screens
   static final smallLargeScale = AppFontSizes(
     bodySmall: 12,
     scaleFactor: AppFontSizesScaleFactors.large,
   );
 
-  /// Compact 12px base with extra large scale (1.618) - Dramatic compact design.
+  /// 12px + dramática (1.618)
   ///
-  /// **Best for:**
-  /// - Minimalist designs with strong hierarchy
-  /// - Landing pages with compact base text
-  /// - Marketing materials with small body copy
-  ///
-  /// **Sizes:** bodySmall: 12.0px, body: 19.4px, bodyLarge: 31.4px, paragraphTitle: 50.8px,
-  /// subheader: 82.2px, header: 133.0px, h3: 215.2px, h2: 348.3px, h1: 563.6px, display: 911.9px
+  /// Uso: Diseños minimalistas, landing pages con body pequeño
   static final smallExtraLargeScale = AppFontSizes(
     bodySmall: 12,
     scaleFactor: AppFontSizesScaleFactors.extraLarge,
   );
 
-  // ============================================
-  // NORMAL BASE (14px) - Standard Mobile Apps
-  // ============================================
+  // ============ NORMAL BASE (14px) - ESTÁNDAR MOBILE ============
 
-  /// Standard 14px base with small scale (1.128) - DEFAULT, subtle hierarchy.
+  /// 14px + sutil (1.128) - DEFAULT
   ///
-  /// **Best for:**
-  /// - Standard mobile apps with many text elements
-  /// - Apps where spacing is more important than hierarchy
-  /// - Information-dense mobile screens
-  ///
-  /// **Sizes:** bodySmall: 14.0px, body: 15.8px, bodyLarge: 17.8px, paragraphTitle: 20.1px,
-  /// subheader: 22.7px, header: 25.6px, h3: 28.9px, h2: 32.6px, h1: 36.8px, display: 41.5px
+  /// Uso: Apps mobile estándar, muchos elementos de texto, layouts densos
   static final normal = AppFontSizes(
     bodySmall: 14,
     scaleFactor: AppFontSizesScaleFactors.small,
   );
 
-  /// Standard 14px base with normal scale (1.174) - Material Design aligned.
+  /// 14px + balanceada (1.174)
   ///
-  /// **Best for:**
-  /// - Material Design apps
-  /// - General-purpose mobile applications
-  /// - Balanced, harmonious designs
-  /// - Forms and settings screens
-  ///
-  /// **Sizes:** bodySmall: 14.0px, body: 16.4px, bodyLarge: 19.3px, paragraphTitle: 22.7px,
-  /// subheader: 26.6px, header: 31.2px, h3: 36.7px, h2: 43.0px, h1: 50.5px, display: 59.3px
+  /// Uso: Material Design, apps general-purpose, forms, settings
   static final normalNormalScale = AppFontSizes(
     bodySmall: 14,
     scaleFactor: AppFontSizesScaleFactors.normal,
   );
 
-  /// Standard 14px base with large scale (1.272) - Clear, modern hierarchy.
+  /// 14px + clara (1.272) ⭐ RECOMENDADO
   ///
-  /// **Best for:**
-  /// - Modern mobile apps
-  /// - Content-focused applications
-  /// - Apps with clear section divisions
-  /// - Recommended for most new projects
-  ///
-  /// **Sizes:** bodySmall: 14.0px, body: 17.8px, bodyLarge: 22.6px, paragraphTitle: 28.7px,
-  /// subheader: 36.5px, header: 46.4px, h3: 59.0px, h2: 75.0px, h1: 95.4px, display: 121.4px
+  /// Uso: Apps modernas, contenido-focused, secciones claras
   static final normalLargeScale = AppFontSizes(
     bodySmall: 14,
     scaleFactor: AppFontSizesScaleFactors.large,
   );
 
-  /// Standard 14px base with extra large scale (1.618) - Impactful standard base.
+  /// 14px + dramática (1.618)
   ///
-  /// **Best for:**
-  /// - Marketing apps with standard body text
-  /// - Apps with hero sections
-  /// - Onboarding screens
-  /// - Landing pages
-  ///
-  /// **Sizes:** bodySmall: 14.0px, body: 22.7px, bodyLarge: 36.6px, paragraphTitle: 59.3px,
-  /// subheader: 95.9px, header: 155.2px, h3: 251.1px, h2: 406.3px, h1: 657.4px, display: 1063.9px
+  /// Uso: Marketing apps, hero sections, onboarding, landing pages
   static final normalExtraLargeScale = AppFontSizes(
     bodySmall: 14,
     scaleFactor: AppFontSizesScaleFactors.extraLarge,
   );
 
-  // ============================================
-  // LARGE BASE (16px) - Enhanced Readability
-  // ============================================
+  // ============ LARGE BASE (16px) - LEGIBILIDAD MEJORADA ============
 
-  /// Large 16px base with small scale (1.128) - Readable with subtle hierarchy.
+  /// 16px + sutil (1.128)
   ///
-  /// **Best for:**
-  /// - Reading apps with many text elements
-  /// - Content apps where uniformity is important
-  /// - Tablet apps with dense content
-  ///
-  /// **Sizes:** bodySmall: 16.0px, body: 18.0px, bodyLarge: 20.3px, paragraphTitle: 23.0px,
-  /// subheader: 25.9px, header: 29.2px, h3: 33.0px, h2: 37.2px, h1: 42.0px, display: 47.4px
+  /// Uso: Reading apps, contenido denso pero legible, tablets
   static final large = AppFontSizes(
     bodySmall: 16,
     scaleFactor: AppFontSizesScaleFactors.small,
@@ -1464,3 +1294,280 @@ class AppFontSizesComponentPresets {
   );
 }
 
+class BaseFontSizesPresets {
+  const BaseFontSizesPresets._();
+
+  final AppFontSizes sFSS = const AppFontSizes(
+    bodySmall: 12,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes sFNS = const AppFontSizes(
+    bodySmall: 12,
+    scaleFactor: AppFontSizesScaleFactors.normal,
+  );
+
+  final AppFontSizes sFLS = const AppFontSizes(
+    bodySmall: 12,
+    scaleFactor: AppFontSizesScaleFactors.large,
+  );
+
+  final AppFontSizes sFXLS = const AppFontSizes(
+    bodySmall: 12,
+    scaleFactor: AppFontSizesScaleFactors.extraLarge,
+  );
+
+  final AppFontSizes nFSS = const AppFontSizes(
+    bodySmall: 14,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes nFNS = const AppFontSizes(
+    bodySmall: 14,
+    scaleFactor: AppFontSizesScaleFactors.normal,
+  );
+
+  final AppFontSizes nFLS = const AppFontSizes(
+    bodySmall: 14,
+    scaleFactor: AppFontSizesScaleFactors.large,
+  );
+
+  final AppFontSizes nFXLS = const AppFontSizes(
+    bodySmall: 14,
+    scaleFactor: AppFontSizesScaleFactors.extraLarge,
+  );
+
+  final AppFontSizes lFSS = const AppFontSizes(
+    bodySmall: 16,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes lFNS = const AppFontSizes(
+    bodySmall: 16,
+    scaleFactor: AppFontSizesScaleFactors.normal,
+  );
+
+  final AppFontSizes lFLS = const AppFontSizes(
+    bodySmall: 16,
+    scaleFactor: AppFontSizesScaleFactors.large,
+  );
+
+  final AppFontSizes lFXLS = const AppFontSizes(
+    bodySmall: 16,
+    scaleFactor: AppFontSizesScaleFactors.extraLarge,
+  );
+
+  final AppFontSizes xLFSS = const AppFontSizes(
+    bodySmall: 18,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes xLFNS = const AppFontSizes(
+    bodySmall: 18,
+    scaleFactor: AppFontSizesScaleFactors.normal,
+  );
+
+  final AppFontSizes xLFLS = const AppFontSizes(
+    bodySmall: 18,
+    scaleFactor: AppFontSizesScaleFactors.large,
+  );
+
+  final AppFontSizes xLFXLS = const AppFontSizes(
+    bodySmall: 18,
+    scaleFactor: AppFontSizesScaleFactors.extraLarge,
+  );
+
+  final AppFontSizes hFSS = const AppFontSizes(
+    bodySmall: 20,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes hFNS = const AppFontSizes(
+    bodySmall: 20,
+    scaleFactor: AppFontSizesScaleFactors.normal,
+  );
+
+  final AppFontSizes hFLS = const AppFontSizes(
+    bodySmall: 20,
+    scaleFactor: AppFontSizesScaleFactors.large,
+  );
+
+  final AppFontSizes hFXLS = const AppFontSizes(
+    bodySmall: 20,
+    scaleFactor: AppFontSizesScaleFactors.extraLarge,
+  );
+}
+
+class DeviceFontSizesPresets {
+  const DeviceFontSizesPresets._();
+
+  final AppFontSizes mobile = const AppFontSizes(
+    bodySmall: 16,
+    scaleFactor: AppFontSizesScaleFactors.normal,
+  );
+
+  final AppFontSizes mobileComfortable = const AppFontSizes(
+    bodySmall: 18,
+    scaleFactor: AppFontSizesScaleFactors.normal,
+  );
+
+  final AppFontSizes mobileCompact = const AppFontSizes(
+    bodySmall: 14,
+    scaleFactor: AppFontSizesScaleFactors.normal,
+  );
+
+  final AppFontSizes tablet = const AppFontSizes(
+    bodySmall: 16,
+    scaleFactor: AppFontSizesScaleFactors.large,
+  );
+
+  final AppFontSizes tabletReading = const AppFontSizes(
+    bodySmall: 18,
+    scaleFactor: AppFontSizesScaleFactors.large,
+  );
+
+  final AppFontSizes desktop = const AppFontSizes(
+    bodySmall: 16,
+    scaleFactor: AppFontSizesScaleFactors.large,
+  );
+
+  final AppFontSizes desktopReading = const AppFontSizes(
+    bodySmall: 18,
+    scaleFactor: AppFontSizesScaleFactors.large,
+  );
+
+  final AppFontSizes desktopMarketing = const AppFontSizes(
+    bodySmall: 16,
+    scaleFactor: AppFontSizesScaleFactors.extraLarge,
+  );
+
+  final AppFontSizes desktopCompact = const AppFontSizes(
+    bodySmall: 14,
+    scaleFactor: AppFontSizesScaleFactors.normal,
+  );
+}
+
+class ComponentsFontSizesPresets {
+  const ComponentsFontSizesPresets._();
+
+  final AppFontSizes buttonMobile = const AppFontSizes(
+    bodySmall: 16,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes buttonTablet = const AppFontSizes(
+    bodySmall: 17,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes buttonDesktop = const AppFontSizes(
+    bodySmall: 16,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes buttonSmall = const AppFontSizes(
+    bodySmall: 14,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes buttonLarge = const AppFontSizes(
+    bodySmall: 18,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes captionMobile = const AppFontSizes(
+    bodySmall: 12,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes captionTablet = const AppFontSizes(
+    bodySmall: 14,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes captionDesktop = const AppFontSizes(
+    bodySmall: 15,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes captionEmphasis = const AppFontSizes(
+    bodySmall: 14,
+    scaleFactor: AppFontSizesScaleFactors.normal,
+  );
+
+  final AppFontSizes formLabelMobile = const AppFontSizes(
+    bodySmall: 16,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes formLabelTablet = const AppFontSizes(
+    bodySmall: 17,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes formLabelDesktop = const AppFontSizes(
+    bodySmall: 16,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes formHint = const AppFontSizes(
+    bodySmall: 14,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes overlineStandard = const AppFontSizes(
+    bodySmall: 12,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes overlineLarge = const AppFontSizes(
+    bodySmall: 14,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes navigationMenu = const AppFontSizes(
+    bodySmall: 15,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes tabLabel = const AppFontSizes(
+    bodySmall: 14,
+    scaleFactor: AppFontSizesScaleFactors.normal,
+  );
+
+  final AppFontSizes notification = const AppFontSizes(
+    bodySmall: 14,
+    scaleFactor: AppFontSizesScaleFactors.normal,
+  );
+
+  final AppFontSizes badge = const AppFontSizes(
+    bodySmall: 12,
+    scaleFactor: AppFontSizesScaleFactors.normal,
+  );
+
+  final AppFontSizes listItemTitle = const AppFontSizes(
+    bodySmall: 16,
+    scaleFactor: AppFontSizesScaleFactors.normal,
+  );
+
+  final AppFontSizes listItemSubtitle = const AppFontSizes(
+    bodySmall: 14,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+
+  final AppFontSizes dialogTitle = const AppFontSizes(
+    bodySmall: 20,
+    scaleFactor: AppFontSizesScaleFactors.normal,
+  );
+
+  final AppFontSizes tooltip = const AppFontSizes(
+    bodySmall: 12,
+    scaleFactor: AppFontSizesScaleFactors.small,
+  );
+}
+
+class FontSizesSystem {
+  BaseFontSizesPresets get base => const BaseFontSizesPresets._();
+  DeviceFontSizesPresets get device => const DeviceFontSizesPresets._();
+  ComponentsFontSizesPresets get components => const ComponentsFontSizesPresets._();
+}
