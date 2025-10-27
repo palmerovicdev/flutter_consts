@@ -26,7 +26,7 @@ Agrega esto a tu `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  flutter_consts: ^1.0.0
+  consts: ^2.0.0
 ```
 
 Luego ejecuta:
