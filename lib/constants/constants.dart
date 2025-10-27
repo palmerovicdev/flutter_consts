@@ -59,6 +59,7 @@ import 'package:consts/constants/app_font_sizes.dart';
 
 import 'app_durations.dart';
 import 'app_radius.dart';
+import 'app_sizes.dart';
 
 export 'app_durations.dart';
 export 'app_font_sizes.dart';
@@ -93,9 +94,130 @@ class Consts {
   /// ```
   static AppDurationsSystem get durations => AppDurationsSystem();
 
+  /// Sistema de tamaños de fuente tipográficos jerárquicos
+  ///
+  /// **Uso:**
+  /// ```dart
+  /// // Tamaños por categoría
+  /// Text(
+  ///   'Título',
+  ///   style: TextStyle(fontSize: Consts.fontSizes.display.lg),  // 57.0
+  /// )
+  ///
+  /// Text(
+  ///   'Subtítulo',
+  ///   style: TextStyle(fontSize: Consts.fontSizes.headline.md),  // 28.0
+  /// )
+  ///
+  /// Text(
+  ///   'Cuerpo',
+  ///   style: TextStyle(fontSize: Consts.fontSizes.body.md),  // 14.0
+  /// )
+  ///
+  /// // Tamaños especiales
+  /// Text(
+  ///   'Etiqueta',
+  ///   style: TextStyle(fontSize: Consts.fontSizes.label.lg),  // 14.0
+  /// )
+  /// ```
   static FontSizesSystem get fontSizes => FontSizesSystem();
 
+  /// Sistema de radius para bordes redondeados y formas
+  ///
+  /// **Uso:**
+  /// ```dart
+  /// // Valores base (double)
+  /// double radiusValue = Consts.radius.base.md;  // 12.0
+  ///
+  /// // BorderRadius para contenedores
+  /// Container(
+  ///   decoration: BoxDecoration(
+  ///     borderRadius: Consts.radius.containers.lg,  // BorderRadius.circular(16.0)
+  ///   ),
+  /// )
+  ///
+  /// // Radius individuales para esquinas específicas
+  /// Container(
+  ///   decoration: BoxDecoration(
+  ///     borderRadius: BorderRadius.only(
+  ///       topLeft: Consts.radius.corners.md,
+  ///       topRight: Consts.radius.corners.lg,
+  ///     ),
+  ///   ),
+  /// )
+  ///
+  /// // RoundedRectangleBorder para shapes
+  /// Card(
+  ///   shape: Consts.radius.shapes.md,
+  /// )
+  ///
+  /// // Métodos helper para radius parciales
+  /// Container(
+  ///   decoration: BoxDecoration(
+  ///     borderRadius: Consts.radius.partial.onlyTop(16.0),
+  ///   ),
+  /// )
+  ///
+  /// // Radius pre-configurados
+  /// showModalBottomSheet(
+  ///   shape: RoundedRectangleBorder(
+  ///     borderRadius: Consts.radius.only.top.rightXl,
+  ///   ),
+  /// )
+  /// ```
   static AppRadiusSystem get radius => AppRadiusSystem();
+
+  /// Sistema de tamaños base para toda la aplicación
+  ///
+  /// **Uso:**
+  /// ```dart
+  /// // Tamaños base
+  /// Container(
+  ///   width: Consts.sizes.base.md,    // 12.0
+  ///   height: Consts.sizes.base.lg,   // 16.0
+  /// )
+  ///
+  /// // Iconos
+  /// Icon(
+  ///   Icons.home,
+  ///   size: Consts.sizes.icons.lg,  // 24.0
+  /// )
+  ///
+  /// // Avatares
+  /// CircleAvatar(
+  ///   radius: Consts.sizes.avatars.md,  // 40.0
+  ///   child: Text('AB'),
+  /// )
+  ///
+  /// // Breakpoints responsivos
+  /// final width = MediaQuery.of(context).size.width;
+  /// if (width < Consts.sizes.breakpoints.mobile) {
+  ///   // Layout móvil (< 600px)
+  /// } else if (width < Consts.sizes.breakpoints.tablet) {
+  ///   // Layout tablet (< 900px)
+  /// } else {
+  ///   // Layout desktop
+  /// }
+  ///
+  /// // Elevaciones Material Design
+  /// Card(
+  ///   elevation: Consts.sizes.elevations.md,  // 4.0
+  ///   child: ...,
+  /// )
+  ///
+  /// // Opacidades Material Design
+  /// Opacity(
+  ///   opacity: Consts.sizes.opacities.disabled,  // 0.38
+  ///   child: Text('Deshabilitado'),
+  /// )
+  ///
+  /// // Aspect Ratios
+  /// AspectRatio(
+  ///   aspectRatio: Consts.sizes.aspectRatios.wide,  // 16:9
+  ///   child: Image.network('url'),
+  /// )
+  /// ```
+  static AppSizesSystem get sizes => AppSizesSystem();
 }
 
 
