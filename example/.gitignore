@@ -47,3 +47,7 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 !/build/
+/build/cb31d188baab42a03ee440207ae3df5e/
+/build/flutter_assets/
+/build/macos/
+/build/native_assets/
