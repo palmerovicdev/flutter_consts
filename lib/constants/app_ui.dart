@@ -449,3 +449,197 @@ class AppUI {
   /// 2.35 - Cinemático (21:9) - Películas y ultra-wide
   static const double aspectRatioCinematic = AppSizes.aspectRatioCinematic;
 }
+
+/// Sistema jerárquico de acceso a constantes de UI
+///
+/// Proporciona una estructura organizada por categorías para acceder
+/// a las constantes de interfaz expuestas por [AppUI].
+///
+/// ### 🎨 Uso
+///
+/// ```dart
+/// // Elevaciones
+/// Card(elevation: AppUISystem().elevations.md);
+///
+/// // Opacidades
+/// Opacity(opacity: AppUISystem().opacities.high);
+///
+/// // Iconos
+/// Icon(Icons.home, size: AppUISystem().icons.lg);
+///
+/// // Avatares
+/// CircleAvatar(radius: AppUISystem().avatars.md);
+///
+/// // Breakpoints
+/// final isMobile = MediaQuery.of(context).size.width < AppUISystem().breakpoints.mobile;
+///
+/// // Aspect Ratios
+/// AspectRatio(aspectRatio: AppUISystem().aspectRatios.wide);
+/// ```
+class AppUIElevations {
+  const AppUIElevations._();
+
+  /// 0.0 - Sin elevación
+  double get none => AppUI.elevationNone;
+
+  /// 1.0 - Elevación mínima (cards en reposo)
+  double get xs => AppUI.elevationXs;
+
+  /// 2.0 - Elevación baja (botones, chips)
+  double get sm => AppUI.elevationSm;
+
+  /// 4.0 - Elevación estándar (cards elevadas, app bar)
+  double get md => AppUI.elevationMd;
+
+  /// 6.0 - Elevación media (floating action button)
+  double get lg => AppUI.elevationLg;
+
+  /// 8.0 - Elevación alta (drawer, bottom sheet)
+  double get xl => AppUI.elevationXl;
+
+  /// 12.0 - Elevación muy alta (dialogs)
+  double get xxl => AppUI.elevationXxl;
+
+  /// 16.0 - Elevación enorme (navigation drawer)
+  double get huge => AppUI.elevationHuge;
+
+  /// 24.0 - Elevación masiva (modal bottom sheet)
+  double get massive => AppUI.elevationMassive;
+}
+
+class AppUIOpacities {
+  const AppUIOpacities._();
+
+  /// 0.0 - Completamente transparente
+  double get none => AppUI.opacityNone;
+
+  /// 0.12 - Hover/Press sobre superficie (ripple effects)
+  double get hover => AppUI.opacityHover;
+
+  /// 0.38 - Estado deshabilitado (texto e iconos)
+  double get disabled => AppUI.opacityDisabled;
+
+  /// 0.54 - Texto secundario y ayuda
+  double get medium => AppUI.opacityMedium;
+
+  /// 0.70 - Elementos menos importantes
+  double get mediumHigh => AppUI.opacityMediumHigh;
+
+  /// 0.87 - Texto activo y primario
+  double get high => AppUI.opacityHigh;
+
+  /// 1.0 - Completamente opaco
+  double get full => AppUI.opacityFull;
+}
+
+class AppUIIcons {
+  const AppUIIcons._();
+
+  /// 12.0 - Ícono extra pequeño
+  double get xs => AppUI.iconXs;
+
+  /// 16.0 - Ícono pequeño
+  double get sm => AppUI.iconSm;
+
+  /// 20.0 - Ícono mediano
+  double get md => AppUI.iconMd;
+
+  /// 24.0 - Tamaño estándar de Material Design
+  double get lg => AppUI.iconLg;
+
+  /// 32.0 - Ícono extra grande
+  double get xl => AppUI.iconXl;
+
+  /// 40.0 - Ícono muy grande
+  double get xxl => AppUI.iconXxl;
+
+  /// 48.0 - Ícono enorme
+  double get huge => AppUI.iconHuge;
+}
+
+class AppUIAvatars {
+  const AppUIAvatars._();
+
+  /// 24.0 - Avatar extra pequeño
+  double get xs => AppUI.avatarXs;
+
+  /// 32.0 - Avatar pequeño
+  double get sm => AppUI.avatarSm;
+
+  /// 40.0 - Avatar mediano (uso común en listas)
+  double get md => AppUI.avatarMd;
+
+  /// 48.0 - Avatar grande
+  double get lg => AppUI.avatarLg;
+
+  /// 64.0 - Avatar extra grande
+  double get xl => AppUI.avatarXl;
+
+  /// 80.0 - Avatar muy grande
+  double get xxl => AppUI.avatarXxl;
+
+  /// 96.0 - Avatar enorme
+  double get huge => AppUI.avatarHuge;
+
+  /// 128.0 - Avatar masivo (para perfiles)
+  double get massive => AppUI.avatarMassive;
+}
+
+class AppUIBreakpoints {
+  const AppUIBreakpoints._();
+
+  /// 600.0 - Ancho máximo para dispositivos móviles
+  double get mobile => AppUI.maxMobileWidth;
+
+  /// 900.0 - Ancho máximo para tablets
+  double get tablet => AppUI.maxTabletWidth;
+
+  /// 1200.0 - Ancho máximo para desktop
+  double get desktop => AppUI.maxDesktopWidth;
+
+  /// 1536.0 - Ancho máximo para contenido centrado
+  double get content => AppUI.maxContentWidth;
+}
+
+class AppUIAspectRatios {
+  const AppUIAspectRatios._();
+
+  /// 1.0 - Cuadrado perfecto (1:1)
+  double get square => AppUI.aspectRatioSquare;
+
+  /// 1.33 - Formato estándar (4:3)
+  double get standard => AppUI.aspectRatioStandard;
+
+  /// 1.5 - Formato foto (3:2)
+  double get photo => AppUI.aspectRatioPhoto;
+
+  /// 1.78 - Widescreen (16:9)
+  double get wide => AppUI.aspectRatioWide;
+
+  /// 2.35 - Cinemático (21:9)
+  double get cinematic => AppUI.aspectRatioCinematic;
+}
+
+/// Sistema jerárquico de acceso a todas las constantes de UI
+///
+/// Similar a [AppSizesSystem], pero usando los valores ya delegados en [AppUI].
+/// Útil cuando prefieres acceso por categorías con autocompletado.
+class AppUISystem {
+  /// Niveles de elevación
+  AppUIElevations get elevations => const AppUIElevations._();
+
+  /// Niveles de opacidad
+  AppUIOpacities get opacities => const AppUIOpacities._();
+
+  /// Tamaños de iconos
+  AppUIIcons get icons => const AppUIIcons._();
+
+  /// Tamaños de avatares
+  AppUIAvatars get avatars => const AppUIAvatars._();
+
+  /// Breakpoints responsivos
+  AppUIBreakpoints get breakpoints => const AppUIBreakpoints._();
+
+  /// Proporciones de aspecto
+  AppUIAspectRatios get aspectRatios => const AppUIAspectRatios._();
+}

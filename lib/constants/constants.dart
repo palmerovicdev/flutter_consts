@@ -61,6 +61,7 @@ import 'app_durations.dart';
 import 'app_radius.dart';
 import 'app_sizes.dart';
 import 'app_spacing.dart';
+import 'app_ui.dart';
 
 export 'app_durations.dart';
 export 'app_font_sizes.dart';
@@ -266,6 +267,27 @@ class Consts {
   /// )
   /// ```
   static AppSpacingSystem get spacing => AppSpacingSystem();
+
+  /// Sistema jerárquico de UI (elevaciones, opacidades, iconos, avatares,
+  /// breakpoints y aspect ratios) con autocompletado por categorías.
+  ///
+  /// **Uso:**
+  /// ```dart
+  /// // Elevaciones
+  /// Card(elevation: Consts.ui.elevations.md);
+  ///
+  /// // Opacidades
+  /// Opacity(opacity: Consts.ui.opacities.high);
+  ///
+  /// // Iconos y Avatares
+  /// Icon(Icons.home, size: Consts.ui.icons.lg);
+  /// CircleAvatar(radius: Consts.ui.avatars.md);
+  ///
+  /// // Breakpoints y Aspect Ratios
+  /// final isMobile = MediaQuery.of(context).size.width < Consts.ui.breakpoints.mobile;
+  /// AspectRatio(aspectRatio: Consts.ui.aspectRatios.wide);
+  /// ```
+  static AppUISystem get ui => AppUISystem();
 }
 
 
