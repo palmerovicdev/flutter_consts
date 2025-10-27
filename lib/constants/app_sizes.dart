@@ -1,31 +1,147 @@
 /// Sistema de escalado base para toda la aplicación
 ///
-/// Define los tamaños fundamentales que se reutilizan en spacing, radius, etc.
-/// Usa una escala consistente y semántica para mantener coherencia visual.
+/// [AppSizes] proporciona una escala de diseño unificada y consistente que
+/// sirve como base para todos los demás sistemas (spacing, radius, iconos, etc.).
+/// Usar estos valores garantiza coherencia visual en toda la aplicación.
 ///
-/// **Uso básico:**
+/// ### 📏 Escalas Disponibles
+///
+/// **Escala Base** (uso general):
+/// - `none` (0.0) → Sin tamaño
+/// - `xxs` (2.0) → Extra extra pequeño
+/// - `xs` (4.0) → Extra pequeño
+/// - `sm` (6.0) → Pequeño
+/// - `smd` (8.0) → Pequeño-mediano
+/// - `mds` (10.0) → Mediano-pequeño
+/// - `md` (12.0) → Mediano ⭐ (más común)
+/// - `mdl` (14.0) → Mediano-grande
+/// - `lg` (16.0) → Grande
+/// - `lgx` (18.0) → Grande-extra
+/// - `xl` (20.0) → Extra grande
+/// - `xxl` (24.0) → Extra extra grande
+/// - `xxxl` (28.0) → Extra extra extra grande
+///
+/// **Escala Extendida** (elementos grandes):
+/// - `huge` (32.0) → Enorme
+/// - `massive` (40.0) → Masivo
+/// - `giant` (48.0) → Gigante
+/// - `mega` (56.0) → Mega
+/// - `ultra` (64.0) → Ultra
+/// - `extreme` (80.0) → Extremo
+/// - `colossal` (96.0) → Colosal
+///
+/// ### 🎨 Uso Básico
+///
 /// ```dart
-/// // Tamaños base
-/// SizedBox(width: AppSizes.md, height: AppSizes.lg);
+/// // Tamaños base para dimensiones
+/// Container(
+///   width: AppSizes.md,    // 12.0
+///   height: AppSizes.lg,   // 16.0
+/// )
 ///
-/// // Iconos
-/// Icon(Icons.home, size: AppSizes.iconLg);
+/// // Iconos con tamaños estandarizados
+/// Icon(Icons.home, size: AppSizes.iconLg)  // 24.0
 ///
-/// // Avatares
-/// CircleAvatar(radius: AppSizes.avatarMd);
+/// // Avatares con radio predefinido
+/// CircleAvatar(radius: AppSizes.avatarMd)  // 40.0
 ///
-/// // Elevaciones
-/// elevation: AppSizes.elevationMd;
+/// // Elevaciones según Material Design
+/// Card(elevation: AppSizes.elevationMd)  // 4.0
 ///
-/// // Opacidades
-/// opacity: AppSizes.opacityMedium;
+/// // Opacidades para estados
+/// Opacity(
+///   opacity: AppSizes.opacityDisabled,  // 0.38
+///   child: Text('Deshabilitado'),
+/// )
+///
+/// // Breakpoints responsivos
+/// if (MediaQuery.of(context).size.width < AppSizes.maxMobileWidth) {
+///   // Layout móvil
+/// }
 /// ```
 ///
-/// **Escala de tamaños:**
-/// - `none` (0.0) - Sin tamaño
-/// - `xxs` a `xxxl` (2.0 - 28.0) - Escala básica
-/// - `huge`, `massive`, `giant` (32.0 - 48.0) - Tamaños grandes
-/// - `mega`, `ultra`, `extreme`, `colossal` (56.0 - 96.0) - Tamaños extra grandes
+/// ### 📱 Tamaños de Iconos
+///
+/// Basados en Material Design:
+/// - `iconXs` (12.0) → Iconos muy pequeños (badges)
+/// - `iconSm` (16.0) → Iconos pequeños (inputs)
+/// - `iconMd` (20.0) → Iconos medianos (botones)
+/// - `iconLg` (24.0) → Estándar Material Design ⭐
+/// - `iconXl` (32.0) → Iconos grandes (headers)
+/// - `iconXxl` (40.0) → Iconos muy grandes (hero)
+/// - `iconHuge` (48.0) → Iconos enormes (splash)
+///
+/// ### 👤 Tamaños de Avatares
+///
+/// Radio del CircleAvatar:
+/// - `avatarXs` (24.0) → Mini avatar (listas compactas)
+/// - `avatarSm` (32.0) → Avatar pequeño (chips)
+/// - `avatarMd` (40.0) → Avatar mediano (listas) ⭐
+/// - `avatarLg` (48.0) → Avatar grande (detalles)
+/// - `avatarXl` (64.0) → Avatar extra grande (perfiles)
+/// - `avatarXxl` (80.0) → Avatar muy grande
+/// - `avatarHuge` (96.0) → Avatar enorme
+/// - `avatarMassive` (128.0) → Avatar masivo (página perfil)
+///
+/// ### 🎭 Elevaciones (Material Design)
+///
+/// Profundidad de sombras:
+/// - `elevationNone` (0.0) → Sin sombra
+/// - `elevationXs` (1.0) → Mínima (cards reposo)
+/// - `elevationSm` (2.0) → Baja (botones, chips)
+/// - `elevationMd` (4.0) → Estándar (cards, app bar) ⭐
+/// - `elevationLg` (6.0) → Media (FAB)
+/// - `elevationXl` (8.0) → Alta (drawer, bottom sheet)
+/// - `elevationXxl` (12.0) → Muy alta (dialogs)
+/// - `elevationHuge` (16.0) → Enorme (nav drawer)
+/// - `elevationMassive` (24.0) → Masiva (modal sheets)
+///
+/// ### 🌫️ Opacidades (Material Design)
+///
+/// Niveles de transparencia:
+/// - `opacityNone` (0.0) → Transparente completo
+/// - `opacityHover` (0.12) → Hover/ripple effects
+/// - `opacityDisabled` (0.38) → Elementos deshabilitados
+/// - `opacityMedium` (0.54) → Texto secundario
+/// - `opacityMediumHigh` (0.70) → Elementos menos importantes
+/// - `opacityHigh` (0.87) → Texto principal
+/// - `opacityFull` (1.0) → Opaco completo
+///
+/// ### 📐 Breakpoints Responsivos
+///
+/// Anchos máximos para diferentes dispositivos:
+/// - `maxMobileWidth` (600.0) → Teléfonos
+/// - `maxTabletWidth` (900.0) → Tablets
+/// - `maxDesktopWidth` (1200.0) → Escritorio
+/// - `maxContentWidth` (1536.0) → Contenido centrado máximo
+///
+/// ### 📏 Aspect Ratios
+///
+/// Proporciones comunes:
+/// - `aspectRatioSquare` (1.0) → Cuadrado 1:1
+/// - `aspectRatioStandard` (1.33) → Estándar 4:3
+/// - `aspectRatioPhoto` (1.5) → Foto 3:2
+/// - `aspectRatioWide` (1.78) → Widescreen 16:9
+/// - `aspectRatioCinematic` (2.35) → Cinemático 21:9
+///
+/// ### 💡 Recomendaciones
+///
+/// 1. **Consistencia**: Usa siempre estos valores en lugar de números arbitrarios
+/// 2. **Semántica**: Elige el nombre que mejor describa el propósito
+/// 3. **Escalabilidad**: Los tamaños siguen una progresión geométrica coherente
+/// 4. **Material Design**: Los valores de elevación y opacidad siguen las guías oficiales
+/// 5. **Responsive**: Usa los breakpoints para adaptar layouts
+///
+/// ### 🔗 Ver también
+///
+/// - [AppSpacing] para espaciado y padding basado en estas escalas
+/// - [AppRadius] para border radius consistente
+/// - [AppUI] para acceso rápido a constantes UI comunes
+///
+/// ### 📚 Referencias
+///
+/// - [Material Design - Elevation](https://material.io/design/environment/elevation.html)
+/// - [Material Design - Iconography](https://material.io/design/iconography)
 class AppSizes {
   AppSizes._();
 
@@ -216,4 +332,3 @@ class AppSizes {
   /// 2.35 - Cinemático (21:9) - Películas y ultra-wide
   static const double aspectRatioCinematic = 21 / 9;
 }
-

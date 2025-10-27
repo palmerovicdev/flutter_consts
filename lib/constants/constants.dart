@@ -51,10 +51,12 @@
 /// - [AppSpacing] - Espaciado, padding, gaps
 /// - [AppRadius] - Border radius, shapes
 /// - [AppDurations] - Duraciones de animaciones
+/// - [AppFontSizes] - Sistema de tipografía jerárquica con escalas configurables
 /// - [AppUI] - Acceso rápido a constantes comunes
 library constants;
 
 export 'app_durations.dart';
+export 'app_font_sizes.dart';
 export 'app_radius.dart';
 export 'app_sizes.dart';
 export 'app_spacing.dart';

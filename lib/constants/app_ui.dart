@@ -1,38 +1,325 @@
 import 'app_sizes.dart';
 
-/// Constantes de UI adicionales para acceso rápido y conveniente
+/// Acceso rápido y conveniente a constantes UI comúnmente usadas
 ///
-/// Esta clase proporciona acceso directo a valores comúnmente usados de [AppSizes],
-/// facilitando el uso de constantes de UI sin necesidad de importar múltiples archivos.
+/// [AppUI] es una clase de conveniencia que proporciona acceso directo a valores
+/// frecuentemente utilizados de [AppSizes], sin necesidad de recordar qué archivo
+/// importar. Todos los valores están delegados a [AppSizes] para mantener una única
+/// fuente de verdad en el sistema de diseño.
 ///
-/// **Uso básico:**
+/// ### 🎯 ¿Cuándo usar AppUI vs AppSizes?
+///
+/// **Usa [AppUI] cuando:**
+/// - Trabajas con elevaciones, opacidades, iconos o avatares
+/// - Necesitas breakpoints responsivos
+/// - Quieres acceso rápido sin pensar en imports
+/// - Estás escribiendo código de UI común
+///
+/// **Usa [AppSizes] cuando:**
+/// - Necesitas valores de la escala base (md, lg, xl, etc.)
+/// - Trabajas con dimensiones personalizadas
+/// - Necesitas acceso a aspect ratios
+///
+/// ### 📦 Categorías Disponibles
+///
+/// 1. **Elevaciones** - Profundidad de sombras (Material Design)
+/// 2. **Opacidades** - Niveles de transparencia (Material Design)
+/// 3. **Tamaños de Iconos** - Dimensiones estandarizadas
+/// 4. **Tamaños de Avatares** - Radios predefinidos
+/// 5. **Breakpoints** - Anchos máximos responsivos
+/// 6. **Aspect Ratios** - Proporciones comunes
+///
+/// ### 🎨 Uso Básico
+///
 /// ```dart
-/// // Elevaciones
+/// // ✅ Elevaciones - Profundidad de sombras
 /// Card(
-///   elevation: AppUI.elevationMd,
-///   child: ...,
-/// );
+///   elevation: AppUI.elevationMd,  // 4.0 - Estándar
+///   child: Content(),
+/// )
 ///
-/// // Opacidades
+/// // ✅ Opacidades - Estados y jerarquía
 /// Opacity(
-///   opacity: AppUI.opacityDisabled,
-///   child: Text('Texto deshabilitado'),
-/// );
+///   opacity: AppUI.opacityDisabled,  // 0.38 - Deshabilitado
+///   child: Text('No disponible'),
+/// )
 ///
-/// // Iconos
-/// Icon(Icons.home, size: AppUI.iconLg);
+/// // ✅ Iconos - Tamaños consistentes
+/// Icon(
+///   Icons.home,
+///   size: AppUI.iconLg,  // 24.0 - Estándar Material
+/// )
 ///
-/// // Avatares
-/// CircleAvatar(radius: AppUI.avatarMd);
+/// // ✅ Avatares - Radios predefinidos
+/// CircleAvatar(
+///   radius: AppUI.avatarMd,  // 40.0 - Lista estándar
+///   child: Text('JD'),
+/// )
 ///
-/// // Breakpoints responsivos
+/// // ✅ Breakpoints - Diseño responsive
+/// final width = MediaQuery.of(context).size.width;
 /// if (width < AppUI.maxMobileWidth) {
-///   // Layout móvil
+///   return MobileLayout();
+/// } else if (width < AppUI.maxTabletWidth) {
+///   return TabletLayout();
+/// } else {
+///   return DesktopLayout();
+/// }
+///
+/// // ✅ Aspect Ratios - Proporciones
+/// AspectRatio(
+///   aspectRatio: AppUI.aspectRatioWide,  // 16:9
+///   child: Image.network('url'),
+/// )
+/// ```
+///
+/// ### 🎭 Elevaciones (Material Design)
+///
+/// Profundidad de sombras según contexto:
+///
+/// ```dart
+/// // Cards en reposo
+/// Card(elevation: AppUI.elevationXs)  // 1.0
+///
+/// // Botones, chips
+/// ElevatedButton(elevation: AppUI.elevationSm)  // 2.0
+///
+/// // Cards elevadas, app bar ⭐
+/// Card(elevation: AppUI.elevationMd)  // 4.0
+///
+/// // Floating Action Button
+/// FloatingActionButton(elevation: AppUI.elevationLg)  // 6.0
+///
+/// // Drawer, bottom sheet
+/// Drawer(elevation: AppUI.elevationXl)  // 8.0
+///
+/// // Dialogs
+/// Dialog(elevation: AppUI.elevationXxl)  // 12.0
+///
+/// // Navigation drawer
+/// NavigationDrawer(elevation: AppUI.elevationHuge)  // 16.0
+///
+/// // Modal bottom sheet
+/// showModalBottomSheet(elevation: AppUI.elevationMassive)  // 24.0
+/// ```
+///
+/// ### 🌫️ Opacidades (Material Design)
+///
+/// Niveles de transparencia para estados y jerarquía:
+///
+/// ```dart
+/// // Hover/press effects
+/// Color.withOpacity(AppUI.opacityHover)  // 0.12
+///
+/// // Elementos deshabilitados
+/// Opacity(
+///   opacity: AppUI.opacityDisabled,  // 0.38
+///   child: DisabledButton(),
+/// )
+///
+/// // Texto secundario, ayuda
+/// Text(
+///   'Texto secundario',
+///   style: TextStyle(
+///     color: Colors.black.withOpacity(AppUI.opacityMedium),  // 0.54
+///   ),
+/// )
+///
+/// // Elementos menos importantes
+/// Icon(
+///   Icons.info,
+///   color: Colors.black.withOpacity(AppUI.opacityMediumHigh),  // 0.70
+/// )
+///
+/// // Texto principal ⭐
+/// Text(
+///   'Texto principal',
+///   style: TextStyle(
+///     color: Colors.black.withOpacity(AppUI.opacityHigh),  // 0.87
+///   ),
+/// )
+///
+/// // Completamente opaco
+/// Container(
+///   color: Colors.blue.withOpacity(AppUI.opacityFull),  // 1.0
+/// )
+/// ```
+///
+/// ### 📱 Tamaños de Iconos
+///
+/// Dimensiones estandarizadas según contexto:
+///
+/// ```dart
+/// // Badges, indicadores
+/// Icon(Icons.circle, size: AppUI.iconXs)  // 12.0
+///
+/// // Inputs, campos de texto
+/// Icon(Icons.search, size: AppUI.iconSm)  // 16.0
+///
+/// // Botones estándar
+/// Icon(Icons.add, size: AppUI.iconMd)  // 20.0
+///
+/// // Estándar Material Design ⭐
+/// Icon(Icons.home, size: AppUI.iconLg)  // 24.0
+///
+/// // Headers, títulos
+/// Icon(Icons.star, size: AppUI.iconXl)  // 32.0
+///
+/// // Hero sections
+/// Icon(Icons.favorite, size: AppUI.iconXxl)  // 40.0
+///
+/// // Splash screens
+/// Icon(Icons.logo, size: AppUI.iconHuge)  // 48.0
+/// ```
+///
+/// ### 👤 Tamaños de Avatares
+///
+/// Radios predefinidos para CircleAvatar:
+///
+/// ```dart
+/// // Listas compactas, chips
+/// CircleAvatar(radius: AppUI.avatarXs)  // 24.0
+///
+/// // Chips, tags pequeños
+/// CircleAvatar(radius: AppUI.avatarSm)  // 32.0
+///
+/// // Listas estándar ⭐
+/// CircleAvatar(radius: AppUI.avatarMd)  // 40.0
+///
+/// // Detalles, cards
+/// CircleAvatar(radius: AppUI.avatarLg)  // 48.0
+///
+/// // Perfiles, headers
+/// CircleAvatar(radius: AppUI.avatarXl)  // 64.0
+///
+/// // Perfiles destacados
+/// CircleAvatar(radius: AppUI.avatarXxl)  // 80.0
+///
+/// // Hero sections
+/// CircleAvatar(radius: AppUI.avatarHuge)  // 96.0
+///
+/// // Página de perfil completa
+/// CircleAvatar(radius: AppUI.avatarMassive)  // 128.0
+/// ```
+///
+/// ### 📐 Breakpoints Responsivos
+///
+/// Anchos máximos para diferentes dispositivos:
+///
+/// ```dart
+/// // Ejemplo: Layout responsive completo
+/// Widget build(BuildContext context) {
+///   final width = MediaQuery.of(context).size.width;
+///
+///   // Mobile: < 600px
+///   if (width < AppUI.maxMobileWidth) {
+///     return MobileLayout(
+///       padding: AppSpacing.paddingLg,  // 16.0
+///       columns: 1,
+///     );
+///   }
+///
+///   // Tablet: 600px - 900px
+///   if (width < AppUI.maxTabletWidth) {
+///     return TabletLayout(
+///       padding: AppSpacing.paddingXl,  // 20.0
+///       columns: 2,
+///     );
+///   }
+///
+///   // Desktop: 900px - 1200px
+///   if (width < AppUI.maxDesktopWidth) {
+///     return DesktopLayout(
+///       padding: AppSpacing.paddingXxl,  // 24.0
+///       columns: 3,
+///     );
+///   }
+///
+///   // Large Desktop: > 1200px
+///   return Container(
+///     constraints: BoxConstraints(
+///       maxWidth: AppUI.maxContentWidth,  // 1536.0 - Contenido centrado
+///     ),
+///     child: WideDesktopLayout(
+///       padding: AppSpacing.paddingHuge,  // 32.0
+///       columns: 4,
+///     ),
+///   );
+/// }
+///
+/// // Ejemplo: Utility para obtener tipo de dispositivo
+/// DeviceType getDeviceType(BuildContext context) {
+///   final width = MediaQuery.of(context).size.width;
+///   if (width < AppUI.maxMobileWidth) return DeviceType.mobile;
+///   if (width < AppUI.maxTabletWidth) return DeviceType.tablet;
+///   return DeviceType.desktop;
 /// }
 /// ```
 ///
-/// **Nota:** Todos los valores están delegados a [AppSizes] para mantener
-/// una única fuente de verdad en el sistema de diseño.
+/// ### 📏 Aspect Ratios
+///
+/// Proporciones comunes para imágenes y media:
+///
+/// ```dart
+/// // Cuadrado - Posts de redes sociales
+/// AspectRatio(
+///   aspectRatio: AppUI.aspectRatioSquare,  // 1:1
+///   child: Image.network('url'),
+/// )
+///
+/// // Estándar - Fotografía tradicional
+/// AspectRatio(
+///   aspectRatio: AppUI.aspectRatioStandard,  // 4:3
+///   child: Image.network('url'),
+/// )
+///
+/// // Foto - Cámaras DSLR
+/// AspectRatio(
+///   aspectRatio: AppUI.aspectRatioPhoto,  // 3:2
+///   child: Image.network('url'),
+/// )
+///
+/// // Widescreen - Videos, pantallas ⭐
+/// AspectRatio(
+///   aspectRatio: AppUI.aspectRatioWide,  // 16:9
+///   child: VideoPlayer(),
+/// )
+///
+/// // Cinemático - Películas, ultra-wide
+/// AspectRatio(
+///   aspectRatio: AppUI.aspectRatioCinematic,  // 21:9
+///   child: MovieClip(),
+/// )
+/// ```
+///
+/// ### 💡 Consejos de Uso
+///
+/// 1. **Import único**: Solo necesitas `import 'package:flutter_const/constants/app_ui.dart'`
+/// 2. **Elevaciones**: Sigue Material Design para consistencia
+/// 3. **Opacidades**: Usa valores de texto para cumplir WCAG (accesibilidad)
+/// 4. **Breakpoints**: Considera orientación del dispositivo también
+/// 5. **Aspect Ratios**: Útil con `FittedBox` y `Image.fit`
+///
+/// ### ✅ Ventajas
+///
+/// - **Conveniencia**: Acceso rápido sin recordar qué importar
+/// - **Descubribilidad**: IDE autocomplete muestra todas las opciones
+/// - **Consistencia**: Valores estandarizados en toda la app
+/// - **Accesibilidad**: Valores optimizados para WCAG
+/// - **Responsive**: Breakpoints predefinidos
+///
+/// ### 🔗 Ver también
+///
+/// - [AppSizes] para todos los valores base y escalas completas
+/// - [AppSpacing] para padding, margin y gaps
+/// - [AppRadius] para border radius
+/// - [AppFontSizes] para tipografía
+///
+/// ### 📚 Referencias
+///
+/// - [Material Design - Elevation](https://material.io/design/environment/elevation.html)
+/// - [Material Design - States](https://material.io/design/interaction/states.html)
+/// - [WCAG - Contrast Guidelines](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html)
 class AppUI {
   AppUI._();
 

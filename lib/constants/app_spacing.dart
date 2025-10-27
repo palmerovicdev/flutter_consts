@@ -1,36 +1,223 @@
 import 'package:flutter/material.dart';
 import 'app_sizes.dart';
 
-/// Sistema de espaciado para mantener consistencia en padding y margin
+/// Sistema de espaciado para mantener consistencia visual en padding, margin y gaps
 ///
-/// Proporciona valores base (double) y EdgeInsets predefinidos para
-/// padding uniforme, horizontal y vertical.
+/// [AppSpacing] proporciona una escala unificada de espaciado basada en [AppSizes],
+/// con helpers convenientes para EdgeInsets y SizedBox. Esto garantiza coherencia
+/// y facilita el diseño responsive.
 ///
-/// **Uso básico:**
+/// ### 📦 Componentes Disponibles
+///
+/// 1. **Valores base** (double) - Para espaciado personalizado
+/// 2. **EdgeInsets.all()** - Padding uniforme en todos los lados
+/// 3. **EdgeInsets.symmetric(horizontal)** - Padding horizontal
+/// 4. **EdgeInsets.symmetric(vertical)** - Padding vertical
+/// 5. **SizedBox(height)** - Gaps verticales entre widgets
+/// 6. **SizedBox(width)** - Gaps horizontales entre widgets
+///
+/// ### 📏 Escala de Espaciado
+///
+/// La escala completa (basada en [AppSizes]):
+/// - `none` (0.0) → Sin espacio
+/// - `xxs` (2.0) → Mínimo
+/// - `xs` (4.0) → Extra pequeño
+/// - `sm` (6.0) → Pequeño
+/// - `smd` (8.0) → Pequeño-mediano
+/// - `mds` (10.0) → Mediano-pequeño
+/// - `md` (12.0) → Mediano ⭐ (más común)
+/// - `mdl` (14.0) → Mediano-grande
+/// - `lg` (16.0) → Grande (muy usado en screens)
+/// - `lgx` (18.0) → Grande-extra
+/// - `xl` (20.0) → Extra grande
+/// - `xxl` (24.0) → Extra extra grande
+/// - `xxxl` (28.0) → Triple extra grande
+/// - `huge` (32.0) → Enorme
+/// - `massive` (40.0) → Masivo
+/// - `giant` (48.0) → Gigante
+/// - `mega` (56.0) → Mega
+/// - `ultra` (64.0) → Ultra
+///
+/// ### 🎨 Uso Básico
+///
 /// ```dart
-/// // Valores base (double)
-/// SizedBox(height: AppSpacing.md);
+/// // ✅ Valores base (double) - Para espaciado personalizado
+/// SizedBox(height: AppSpacing.md)  // 12.0
+/// Container(margin: EdgeInsets.all(AppSpacing.lg))  // 16.0
 ///
-/// // EdgeInsets predefinidos
+/// // ✅ Padding uniforme (EdgeInsets.all)
 /// Padding(
-///   padding: AppSpacing.paddingMd, // EdgeInsets.all(12.0)
-///   child: Text('Contenido'),
-/// );
+///   padding: AppSpacing.paddingMd,  // EdgeInsets.all(12.0)
+///   child: Text('Contenido con padding uniforme'),
+/// )
 ///
-/// // Espaciado horizontal
-/// Padding(
-///   padding: AppSpacing.horizontalLg, // EdgeInsets.symmetric(horizontal: 16.0)
-///   child: Row(...),
-/// );
+/// // ✅ Padding horizontal (EdgeInsets.symmetric)
+/// Container(
+///   padding: AppSpacing.horizontalLg,  // horizontal: 16.0
+///   child: Row(
+///     children: [
+///       Text('Contenido con margen lateral'),
+///     ],
+///   ),
+/// )
 ///
-/// // Espaciado vertical
-/// Padding(
-///   padding: AppSpacing.verticalMd, // EdgeInsets.symmetric(vertical: 12.0)
-///   child: Column(...),
-/// );
+/// // ✅ Padding vertical (EdgeInsets.symmetric)
+/// Container(
+///   padding: AppSpacing.verticalMd,  // vertical: 12.0
+///   child: Column(
+///     children: [
+///       Text('Espaciado arriba y abajo'),
+///     ],
+///   ),
+/// )
+///
+/// // ✅ Gaps verticales en Column
+/// Column(
+///   children: [
+///     Text('Elemento 1'),
+///     AppSpacing.gapMd,      // SizedBox(height: 12.0)
+///     Text('Elemento 2'),
+///     AppSpacing.gapLg,      // SizedBox(height: 16.0)
+///     Text('Elemento 3'),
+///   ],
+/// )
+///
+/// // ✅ Gaps horizontales en Row
+/// Row(
+///   children: [
+///     Icon(Icons.star),
+///     AppSpacing.gapHorizontalSm,  // SizedBox(width: 6.0)
+///     Text('5.0'),
+///   ],
+/// )
 /// ```
 ///
-/// Usa la escala de [AppSizes] para mantener coherencia en toda la app.
+/// ### 📱 Patrones Comunes por Dispositivo
+///
+/// **Mobile:**
+/// ```dart
+/// // Padding de screen
+/// Padding(padding: AppSpacing.paddingLg)  // 16.0
+///
+/// // Separación entre secciones
+/// AppSpacing.gapXl  // 20.0
+///
+/// // Separación entre elementos
+/// AppSpacing.gapMd  // 12.0
+/// ```
+///
+/// **Tablet:**
+/// ```dart
+/// // Padding de screen
+/// Padding(padding: AppSpacing.paddingXl)  // 20.0
+///
+/// // Separación entre secciones
+/// AppSpacing.gapXxl  // 24.0
+///
+/// // Separación entre elementos
+/// AppSpacing.gapLg  // 16.0
+/// ```
+///
+/// **Desktop:**
+/// ```dart
+/// // Padding de screen
+/// Padding(padding: AppSpacing.paddingXxl)  // 24.0
+///
+/// // Separación entre secciones
+/// AppSpacing.gapHuge  // 32.0
+///
+/// // Separación entre elementos
+/// AppSpacing.gapXl  // 20.0
+/// ```
+///
+/// ### 🎯 Guía de Uso por Contexto
+///
+/// **Cards y Containers:**
+/// ```dart
+/// Card(
+///   child: Padding(
+///     padding: AppSpacing.paddingMd,  // Padding interno estándar
+///     child: Column(
+///       children: [
+///         Text('Título'),
+///         AppSpacing.gapSm,  // Separación pequeña
+///         Text('Descripción'),
+///       ],
+///     ),
+///   ),
+/// )
+/// ```
+///
+/// **List Items:**
+/// ```dart
+/// ListTile(
+///   contentPadding: AppSpacing.horizontalLg,  // Padding lateral
+///   title: Text('Item'),
+/// )
+/// ```
+///
+/// **Forms:**
+/// ```dart
+/// Column(
+///   children: [
+///     TextField(),
+///     AppSpacing.gapMd,  // Separación entre campos
+///     TextField(),
+///     AppSpacing.gapXl,  // Separación antes del botón
+///     ElevatedButton(child: Text('Enviar')),
+///   ],
+/// )
+/// ```
+///
+/// **Sections:**
+/// ```dart
+/// Column(
+///   crossAxisAlignment: CrossAxisAlignment.start,
+///   children: [
+///     Text('Sección 1', style: headlineStyle),
+///     AppSpacing.gapMd,  // Separación título-contenido
+///     Text('Contenido...'),
+///     AppSpacing.gapXxl,  // Separación entre secciones
+///     Text('Sección 2', style: headlineStyle),
+///   ],
+/// )
+/// ```
+///
+/// ### 💡 Recomendaciones
+///
+/// 1. **Consistencia**: Usa siempre la escala de AppSpacing, no valores arbitrarios
+/// 2. **Jerarquía**: Más espacio = más separación conceptual
+/// 3. **Responsive**: Ajusta el espaciado según el dispositivo
+/// 4. **Gaps vs Padding**:
+///    - Usa `gap*` para separar widgets en Column/Row
+///    - Usa `padding*` para espacio interno de containers
+/// 5. **Valores comunes**:
+///    - `md` (12.0) → Padding interno general
+///    - `lg` (16.0) → Padding de screens mobile
+///    - `xl` (20.0) → Separación entre secciones
+///
+/// ### ❌ Evitar
+///
+/// ```dart
+/// // ❌ NO uses valores arbitrarios
+/// Padding(padding: EdgeInsets.all(13.5))
+/// SizedBox(height: 17.3)
+///
+/// // ✅ USA la escala predefinida
+/// Padding(padding: AppSpacing.paddingMd)  // 12.0
+/// AppSpacing.gapLg  // 16.0
+/// ```
+///
+/// ### 🔗 Ver también
+///
+/// - [AppSizes] para la escala base de tamaños
+/// - [AppRadius] para border radius consistente
+/// - [AppFontSizes] para tipografía jerárquica
+///
+/// ### 📚 Referencias
+///
+/// - [Material Design - Spacing](https://material.io/design/layout/spacing-methods.html)
+/// - [Material Design - Layout](https://material.io/design/layout/understanding-layout.html)
 class AppSpacing {
   AppSpacing._();
 
@@ -182,22 +369,28 @@ class AppSpacing {
   static const EdgeInsets horizontalXxl = EdgeInsets.symmetric(horizontal: xxl);
 
   /// 28.0 - Padding horizontal extra extra extra grande
-  static const EdgeInsets horizontalXxxl = EdgeInsets.symmetric(horizontal: xxxl);
+  static const EdgeInsets horizontalXxxl =
+      EdgeInsets.symmetric(horizontal: xxxl);
 
   /// 32.0 - Padding horizontal enorme
-  static const EdgeInsets horizontalHuge = EdgeInsets.symmetric(horizontal: huge);
+  static const EdgeInsets horizontalHuge =
+      EdgeInsets.symmetric(horizontal: huge);
 
   /// 40.0 - Padding horizontal masivo
-  static const EdgeInsets horizontalMassive = EdgeInsets.symmetric(horizontal: massive);
+  static const EdgeInsets horizontalMassive =
+      EdgeInsets.symmetric(horizontal: massive);
 
   /// 48.0 - Padding horizontal gigante
-  static const EdgeInsets horizontalGiant = EdgeInsets.symmetric(horizontal: giant);
+  static const EdgeInsets horizontalGiant =
+      EdgeInsets.symmetric(horizontal: giant);
 
   /// 56.0 - Padding horizontal mega
-  static const EdgeInsets horizontalMega = EdgeInsets.symmetric(horizontal: mega);
+  static const EdgeInsets horizontalMega =
+      EdgeInsets.symmetric(horizontal: mega);
 
   /// 64.0 - Padding horizontal ultra
-  static const EdgeInsets horizontalUltra = EdgeInsets.symmetric(horizontal: ultra);
+  static const EdgeInsets horizontalUltra =
+      EdgeInsets.symmetric(horizontal: ultra);
 
   // EdgeInsets.symmetric(vertical) - Padding vertical
   /// 0.0 - Sin padding vertical
@@ -243,7 +436,8 @@ class AppSpacing {
   static const EdgeInsets verticalHuge = EdgeInsets.symmetric(vertical: huge);
 
   /// 40.0 - Padding vertical masivo
-  static const EdgeInsets verticalMassive = EdgeInsets.symmetric(vertical: massive);
+  static const EdgeInsets verticalMassive =
+      EdgeInsets.symmetric(vertical: massive);
 
   /// 48.0 - Padding vertical gigante
   static const EdgeInsets verticalGiant = EdgeInsets.symmetric(vertical: giant);
