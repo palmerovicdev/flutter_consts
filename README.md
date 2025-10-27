@@ -1,22 +1,27 @@
-# Flutter Consts 🎨
+# Consts 🎨
 
-[![pub package](https://img.shields.io/pub/v/flutter_consts.svg)](https://pub.dev/packages/flutter_consts)
+[![pub package](https://img.shields.io/pub/v/consts.svg)](https://pub.dev/packages/consts)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Flutter](https://img.shields.io/badge/Flutter-3.5%2B-blue.svg)](https://flutter.dev/)
+[![Dart](https://img.shields.io/badge/Dart-3.5%2B-blue.svg)](https://dart.dev/)
 
-Sistema completo de constantes de diseño para aplicaciones Flutter. Mantén consistencia visual en toda tu app con un conjunto estandarizado de tamaños, espaciados, bordes y animaciones.
+Sistema completo de constantes de diseño para aplicaciones Flutter. Mantén consistencia visual en toda tu app con un conjunto estandarizado de tamaños, espaciados, bordes, tipografía y animaciones.
 
 ## ✨ Características
 
+- 🔤 **Sistema tipográfico completo** - AppFontSizes con escalas responsive
+- 📱 **Diseño responsive** - Tamaños adaptativos y breakpoints
 - 🎯 **Sistema unificado** - Todas las constantes siguen la misma nomenclatura
 - 📏 **Escala coherente** - De `xs` a `massive` con valores progresivos
 - 🔧 **Fácil mantenimiento** - Cambios centralizados
 - 💡 **Autocompletado** - Descubrimiento fácil en el IDE
 - 📦 **Sin dependencias** - Solo Flutter SDK
+- 🎨 **Material Design 3** - Compatible con las últimas guías de diseño
 - 🚀 **Optimizado** - Todo const para máximo rendimiento
 - 📖 **Documentado** - Cada constante incluye documentación
 
 ## 📦 Instalación
-
+  consts: ^2.0.0
 Agrega esto a tu `pubspec.yaml`:
 
 ```yaml
@@ -25,8 +30,28 @@ dependencies:
 ```
 
 Luego ejecuta:
+### Migración desde v1.x
 
-```bash
+Si estás migrando desde la versión 1.x, solo necesitas actualizar la importación:
+import 'package:consts/flutter_const.dart';
+```dart
+// Antes (v1.x)
+import 'package:flutter_consts/flutter_const.dart';
+
+// Ahora (v2.x)
+import 'package:consts/flutter_const.dart';
+```
+
+
+      Text(
+        'Título',
+        style: TextStyle(
+          fontSize: context.getResponsiveFontSize(
+            smallest: AppFontSizesConstants.bodyLarge,
+            largest: AppFontSizesConstants.headline6,
+          ),
+        ),
+      ),
 flutter pub get
 ```
 
@@ -35,6 +60,7 @@ flutter pub get
 ```dart
 import 'package:flutter_consts/flutter_const.dart';
 
+| **AppFontSizes** | Sistema tipográfico | `context.getResponsiveFontSize(smallest: 14, largest: 24)` |
 // Usar constantes en tu app
 Container(
   padding: AppSpacing.paddingLg,
@@ -237,7 +263,143 @@ Container(
 )
 ```
 
-### 4. **AppDurations** - Duraciones de Animación
+### 4. **AppFontSizes** - Sistema Tipográfico Responsive
+
+Sistema completo de tamaños de fuente con soporte responsive mediante extension method.
+
+**Extension Method - Tamaños Responsive:**
+```dart
+// Extension en BuildContext para calcular tamaños responsive
+Text(
+  'Título Responsive',
+  style: TextStyle(
+    fontSize: context.getResponsiveFontSize(
+      smallest: 16,        // Tamaño en pantallas pequeñas
+      largest: 32,         // Tamaño en pantallas grandes
+      smallestScreenSize: 360,   // Ancho mínimo (opcional, default: 360)
+      largestScreenSize: 1440,   // Ancho máximo (opcional, default: 1440)
+    ),
+  ),
+)
+
+// Uso con constantes predefinidas
+Text(
+  'Encabezado',
+  style: TextStyle(
+    fontSize: context.getResponsiveFontSize(
+      smallest: AppFontSizesConstants.bodyLarge,
+      largest: AppFontSizesConstants.headline4,
+    ),
+  ),
+)
+```
+
+**Constantes Predefinidas (AppFontSizesConstants):**
+```dart
+// Display - Tamaños grandes para encabezados principales
+AppFontSizesConstants.displayLarge   // 57.0 (Material Design 3)
+AppFontSizesConstants.displayMedium  // 45.0
+AppFontSizesConstants.displaySmall   // 36.0
+
+// Headline - Encabezados de sección
+AppFontSizesConstants.headline1      // 32.0
+AppFontSizesConstants.headline2      // 28.0
+AppFontSizesConstants.headline3      // 24.0
+AppFontSizesConstants.headline4      // 22.0
+AppFontSizesConstants.headline5      // 20.0
+AppFontSizesConstants.headline6      // 18.0
+
+// Title - Títulos de componentes
+AppFontSizesConstants.titleLarge     // 22.0
+AppFontSizesConstants.titleMedium    // 16.0
+AppFontSizesConstants.titleSmall     // 14.0
+
+// Body - Texto del cuerpo
+AppFontSizesConstants.bodyLarge      // 16.0
+AppFontSizesConstants.body           // 14.0
+AppFontSizesConstants.bodyMedium     // 14.0
+AppFontSizesConstants.bodySmall      // 12.0
+
+// Label - Etiquetas de botones y campos
+AppFontSizesConstants.labelLarge     // 14.0
+AppFontSizesConstants.labelMedium    // 12.0
+AppFontSizesConstants.labelSmall     // 11.0
+
+// Caption - Texto auxiliar
+AppFontSizesConstants.caption        // 12.0
+AppFontSizesConstants.overline       // 10.0
+```
+
+**Presets de Tamaño (AppFontSizesPresets):**
+```dart
+// Presets para diferentes escalas de aplicación
+AppFontSizesPresets.tiny             // 0.8x - Para apps compactas
+AppFontSizesPresets.small            // 0.9x - Para apps con mucho contenido
+AppFontSizesPresets.normal           // 1.0x - Escala estándar (default)
+AppFontSizesPresets.large            // 1.1x - Para mejor legibilidad
+AppFontSizesPresets.extraLarge       // 1.2x - Para accesibilidad
+
+// Uso con MediaQuery
+final preset = AppFontSizesPresets.normal;
+Text(
+  'Texto',
+  style: TextStyle(
+    fontSize: AppFontSizesConstants.body * preset,
+  ),
+)
+```
+
+**Ejemplo Completo - Jerarquía Tipográfica:**
+```dart
+Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    // Título principal responsive
+    Text(
+      'Título Principal',
+      style: TextStyle(
+        fontSize: context.getResponsiveFontSize(
+          smallest: AppFontSizesConstants.headline3,
+          largest: AppFontSizesConstants.displaySmall,
+        ),
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+    AppSpacing.gapMd,
+    
+    // Subtítulo
+    Text(
+      'Subtítulo',
+      style: TextStyle(
+        fontSize: AppFontSizesConstants.titleLarge,
+        fontWeight: FontWeight.w600,
+      ),
+    ),
+    AppSpacing.gapSm,
+    
+    // Cuerpo de texto
+    Text(
+      'Este es el contenido principal del texto...',
+      style: TextStyle(
+        fontSize: AppFontSizesConstants.bodyLarge,
+        height: 1.5,
+      ),
+    ),
+    AppSpacing.gapSm,
+    
+    // Caption
+    Text(
+      'Información adicional',
+      style: TextStyle(
+        fontSize: AppFontSizesConstants.caption,
+        color: Colors.grey,
+      ),
+    ),
+  ],
+)
+```
+
+### 5. **AppDurations** - Duraciones de Animación
 
 Duraciones estandarizadas para animaciones y transiciones.
 
@@ -297,7 +459,7 @@ void onSearchChanged(String query) {
 }
 ```
 
-### 5. **AppUI** - Constantes de UI
+### 6. **AppUI** - Constantes de UI
 
 Acceso rápido a constantes comunes. Delega a `AppSizes` para evitar duplicación.
 
@@ -620,11 +782,20 @@ cd example
 flutter run
 ```
 
-La app incluye 4 secciones:
-- **Spacing**: Demuestra padding y gaps
-- **Radius**: Muestra border radius y shapes
-- **Sizes**: Presenta iconos, avatares, elevaciones y opacidades
-- **Animations**: Ejemplos de animaciones
+La app incluye **6 secciones interactivas**:
+- **Overview**: Resumen general del sistema de diseño
+- **Spacing**: Demuestra padding, gaps verticales y horizontales
+- **Radius**: Muestra border radius, shapes y variantes direccionales
+- **Sizes**: Presenta iconos, avatares, elevaciones, opacidades y breakpoints
+- **Fonts**: Sistema tipográfico completo con escalas responsive
+- **Animations**: Ejemplos de animaciones con duraciones predefinidas
+
+**Características de la app:**
+- ✅ Navegación adaptativa (NavigationRail en desktop, BottomNavigationBar en móvil)
+- ✅ Diseño completamente responsive
+- ✅ Tema oscuro moderno con Material Design 3
+- ✅ Ejemplos interactivos con código y visualización
+- ✅ Mínimo SDK: **Dart ^3.5.0** (ejemplo), **Dart ^3.0.0** (paquete)
 
 ## 📝 Notas Importantes
 
@@ -657,7 +828,15 @@ Inspirado en sistemas de diseño de:
 - Bootstrap
 - Chakra UI
 
+## 📚 Documentación Adicional
+
+- [CHANGELOG](CHANGELOG.md) - Historial de cambios
+- [Ejemplo de Aplicación](example/README.md) - Documentación completa del ejemplo
+- [Arquitectura del Ejemplo](example/ARCHITECTURE.md) - Detalles de implementación
+
 ---
 
 **Hecho con ❤️ para la comunidad Flutter**
+
+> **Versión 2.0.0** - Ahora con sistema tipográfico completo, diseño responsive y Material Design 3
 

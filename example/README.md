@@ -1,57 +1,120 @@
-# Flutter Const - Example App
+# Consts - Example App 🎨
 
-Una aplicación de ejemplo completa que demuestra el uso del paquete **flutter_const** para mantener consistencia visual en aplicaciones Flutter.
+Una aplicación de ejemplo completa y moderna que demuestra el uso del paquete **consts** (flutter_const) para mantener consistencia visual en aplicaciones Flutter.
 
 ## 🎯 Sobre esta App
 
-Esta aplicación de ejemplo muestra todas las constantes disponibles en el paquete `flutter_const`:
+Esta aplicación de ejemplo muestra todas las constantes y sistemas de diseño disponibles en el paquete:
 
-- **AppSpacing**: Sistema de espaciado y padding
-- **AppRadius**: Border radius y shapes
-- **AppSizes**: Tamaños, iconos, avatares, elevaciones y opacidades
-- **AppDurations**: Duraciones de animaciones
-- **AppUI**: Acceso rápido a constantes comunes
+- **AppSpacing**: Sistema completo de espaciado, padding y gaps
+- **AppRadius**: Border radius, shapes y variantes direccionales
+- **AppSizes**: Tamaños base, iconos, avatares, elevaciones y opacidades
+- **AppFonts**: Sistema tipográfico completo con diferentes escalas
+- **AppDurations**: Duraciones de animaciones y transiciones
+- **AppUI**: Acceso rápido a constantes comunes y helpers
 
-## 📱 Capturas de Pantalla
+## 📱 Características de la App
 
-La app contiene 4 secciones principales:
+La app contiene **6 secciones principales** con ejemplos interactivos:
 
-1. **Spacing** - Demuestra padding, gaps verticales y horizontales
-2. **Radius** - Muestra diferentes border radius y shapes
-3. **Sizes** - Presenta tamaños de iconos, avatares, elevaciones y opacidades
-4. **Animations** - Ejemplos de animaciones con duraciones predefinidas
+### 1. **Overview** 📊
+Visión general del sistema de diseño con acceso rápido a todas las constantes
+
+### 2. **Spacing** 📐
+- Padding uniforme, horizontal y vertical
+- Gaps verticales y horizontales
+- Ejemplos de uso en layouts reales
+- Sistema completo de espaciado de `none` a `massive`
+
+### 3. **Radius** ⭕
+- Border radius completos y direccionales
+- Shapes para botones y componentes
+- Variantes de top, bottom, left y right
+- Desde `none` hasta `circular`
+
+### 4. **Sizes** 📏
+- Tamaños de iconos (Material Design)
+- Avatares de diferentes tamaños
+- Elevaciones para Material Design
+- Opacidades estándar
+- Breakpoints responsivos
+
+### 5. **Fonts** 🔤
+- Sistema tipográfico completo
+- Diferentes escalas: Display, Headline, Title, Body, Label
+- Pesos de fuente y estilos
+- Ejemplos de jerarquía visual
+
+### 6. **Animations** 🎬
+- Duraciones predefinidas de animaciones
+- Ejemplos de AnimatedContainer
+- Transiciones de página
+- Duraciones específicas para UX (debounce, snackbar, etc.)
+
+## 🖼️ Capturas de Pantalla
+
+La aplicación demuestra visualmente cada uno de los sistemas de diseño:
+
+- **Vista Desktop**: Navegación con NavigationRail lateral para pantallas grandes
+- **Vista Móvil**: Bottom NavigationBar para facilitar el acceso en dispositivos móviles
+- **Tema Oscuro**: Diseño moderno con Material Design 3
+- **Responsive**: Se adapta automáticamente a diferentes tamaños de pantalla
+
+> **Nota**: La app incluye ejemplos interactivos que permiten ver en tiempo real cómo cada constante afecta el diseño de los componentes.
 
 ## 🚀 Ejecutar la App
 
 ### Prerrequisitos
 
-- Flutter SDK 3.0 o superior
-- Dart SDK 3.0 o superior
+- Flutter SDK **3.5.0** o superior
+- Dart SDK **3.5.0** o superior
 
-### Instalación
+### Instalación y Ejecución
 
-1. Clona el repositorio o descarga el paquete
-2. Navega al directorio example:
+1. **Clona el repositorio** o descarga el paquete
    ```bash
+   git clone <repository-url>
    cd flutter_const/example
    ```
 
-3. Obtén las dependencias:
+2. **Instala las dependencias**:
    ```bash
    flutter pub get
    ```
 
-4. Ejecuta la aplicación:
+3. **Ejecuta la aplicación**:
+   
+   Para desarrollo:
    ```bash
    flutter run
    ```
+   
+   Para web:
+   ```bash
+   flutter run -d chrome
+   ```
+   
+   Para seleccionar dispositivo específico:
+   ```bash
+   flutter devices  # Lista dispositivos disponibles
+   flutter run -d <device-id>
+   ```
+
+### Plataformas Soportadas
+
+- ✅ Android
+- ✅ iOS
+- ✅ Web
+- ✅ macOS
+- ✅ Linux
+- ✅ Windows
 
 ## 💡 Cómo Usar las Constantes
 
 ### Importar el Paquete
 
 ```dart
-import 'package:flutter_consts/flutter_const.dart';
+import 'package:consts/flutter_const.dart';
 ```
 
 ### Ejemplos de Uso
@@ -162,12 +225,47 @@ Timer(AppDurations.searchDebounce, () {
 
 ## 🎨 Características de la App de Ejemplo
 
-- ✅ **4 secciones interactivas** con ejemplos visuales
-- ✅ **Navegación con tabs** para fácil exploración
-- ✅ **Ejemplos prácticos** de cada constante
+- ✅ **6 secciones interactivas** con ejemplos visuales (Overview, Spacing, Radius, Sizes, Fonts, Animations)
+- ✅ **Navegación adaptativa** con rail lateral en desktop y bottom navigation en móvil
+- ✅ **Ejemplos prácticos** de cada constante con código y visualización
 - ✅ **Animaciones en vivo** para demostrar duraciones
-- ✅ **Material Design 3** con colores modernos
-- ✅ **Código bien documentado** para aprender
+- ✅ **Material Design 3** con tema oscuro moderno
+- ✅ **Diseño responsive** que se adapta a diferentes tamaños de pantalla
+- ✅ **Código bien documentado** para aprender buenas prácticas
+- ✅ **Sistema tipográfico completo** con todas las escalas de fuentes
+- ✅ **SVG support** con ejemplos de iconos personalizados
+
+## 🏗️ Arquitectura del Proyecto
+
+La app de ejemplo sigue una arquitectura limpia y modular:
+
+```
+lib/
+├── main.dart                    # Punto de entrada de la aplicación
+├── core/
+│   └── utils/
+│       └── responsive.dart      # Utilidades para diseño responsive
+├── screens/
+│   ├── overview_screen.dart     # Pantalla de resumen general
+│   ├── spacing_screen.dart      # Demostración de AppSpacing
+│   ├── radius_screen.dart       # Demostración de AppRadius
+│   ├── sizes_screen.dart        # Demostración de AppSizes
+│   ├── fonts_screen.dart        # Demostración de AppFonts
+│   └── animations_screen.dart   # Demostración de AppDurations
+├── theme/
+│   └── app_theme.dart          # Configuración del tema de la app
+└── widgets/
+    └── common/
+        └── responsive_layout.dart  # Layout adaptativo para diferentes pantallas
+```
+
+### Características de Arquitectura
+
+- **Separación de responsabilidades**: Cada pantalla en su propio archivo
+- **Reutilización de código**: Widgets comunes compartidos
+- **Diseño adaptativo**: Sistema responsive que funciona en todas las plataformas
+- **Tema centralizado**: Configuración de colores y estilos en un solo lugar
+- **Clean Code**: Código limpio y fácil de mantener
 
 ## 📖 Documentación Completa
 
@@ -179,7 +277,37 @@ Para más información sobre el paquete flutter_const, consulta:
 
 ## 🤝 Contribuir
 
-¿Encontraste un bug o tienes una sugerencia? ¡Crea un issue o pull request!
+¿Encontraste un bug o tienes una sugerencia para mejorar la app de ejemplo?
+
+1. **Reporta Issues**: Crea un issue describiendo el problema o la mejora
+2. **Pull Requests**: Fork el repositorio, haz tus cambios y envía un PR
+3. **Feedback**: Comparte tu experiencia usando el paquete
+
+### Áreas de Contribución
+
+- 🐛 Corrección de bugs
+- ✨ Nuevos ejemplos interactivos
+- 📝 Mejoras en la documentación
+- 🎨 Mejoras en el diseño de la app
+- 🚀 Optimizaciones de rendimiento
+
+## 💻 Desarrollo
+
+### Estructura del Código
+
+- **main.dart**: Configuración inicial y navegación principal
+- **screens/**: Cada pantalla demuestra un aspecto del sistema de diseño
+- **widgets/**: Componentes reutilizables como el layout responsive
+- **theme/**: Configuración de temas y colores
+- **core/**: Utilidades y helpers (responsive, etc.)
+
+### Buenas Prácticas Implementadas
+
+- ✅ Uso consistente de las constantes del paquete
+- ✅ Código bien comentado y documentado
+- ✅ Separación clara de responsabilidades
+- ✅ Diseño adaptativo y responsive
+- ✅ Performance optimizado con widgets const
 
 ## 📄 Licencia
 
@@ -187,6 +315,8 @@ Este proyecto está bajo la licencia especificada en el paquete principal.
 
 ---
 
+**Desarrollado con ❤️ usando Flutter & Consts**
+
 **Nota**: Esta es una aplicación de ejemplo para demostrar el uso del paquete flutter_const. 
-No está diseñada para uso en producción, sino como referencia de implementación.
+No está diseñada para uso en producción, sino como referencia de implementación y aprendizaje.
 

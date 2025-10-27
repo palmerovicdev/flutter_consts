@@ -2,7 +2,7 @@ name: consts
 description: "Flutter constants for almost everything :)"
 homepage: https://github.com/palmerovicdev/flutter_consts
 
-version: 1.0.0
+version: 2.0.0
 
 environment:
   sdk: ^3.0.0
