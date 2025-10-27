@@ -1,0 +1,29 @@
+{
+  "" : {
+    "diagnostics" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/url_launcher_macos-primary.dia",
+    "emit-module-dependencies" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/url_launcher_macos-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/url_launcher_macos-primary-emit-module.dia",
+    "pch" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/url_launcher_macos-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/url_launcher_macos-primary.swiftdeps"
+  },
+  "/Volumes/TuMaletin/.cache/.pub-cache/hosted/pub.dev/url_launcher_macos-3.2.4/macos/url_launcher_macos/Sources/url_launcher_macos/UrlLauncherPlugin.swift" : {
+    "const-values" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/UrlLauncherPlugin.swiftconstvalues",
+    "dependencies" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/UrlLauncherPlugin.d",
+    "diagnostics" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/UrlLauncherPlugin.dia",
+    "index-unit-output-path" : "/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/UrlLauncherPlugin.o",
+    "llvm-bc" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/UrlLauncherPlugin.bc",
+    "object" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/UrlLauncherPlugin.o",
+    "swift-dependencies" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/UrlLauncherPlugin.swiftdeps",
+    "swiftmodule" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/UrlLauncherPlugin~partial.swiftmodule"
+  },
+  "/Volumes/TuMaletin/.cache/.pub-cache/hosted/pub.dev/url_launcher_macos-3.2.4/macos/url_launcher_macos/Sources/url_launcher_macos/messages.g.swift" : {
+    "const-values" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/messages.g.swiftconstvalues",
+    "dependencies" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/messages.g.d",
+    "diagnostics" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/messages.g.dia",
+    "index-unit-output-path" : "/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/messages.g.o",
+    "llvm-bc" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/messages.g.bc",
+    "object" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/messages.g.o",
+    "swift-dependencies" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/messages.g.swiftdeps",
+    "swiftmodule" : "/Volumes/TuMaletin/Victor/04-Applications/flutter_const/example/build/macos/Build/Intermediates.noindex/Pods.build/Debug/url_launcher_macos.build/Objects-normal/arm64/messages.g~partial.swiftmodule"
+  }
+}

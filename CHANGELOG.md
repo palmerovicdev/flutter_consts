@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2025-10-29
+
+### Added
+- **Punto de acceso central para todas las constantes de diseño**
+  - Nueva clase `Consts` como entrada unificada para todos los sistemas jerárquicos de constantes.
+  - Acceso organizado a sistemas principales: `durations`, `fontSizes`, `radius`, `sizes`, `spacing`, `ui`.
+  - Ejemplos detallados de uso incluidos en la documentación.
+  - Soporte completo para autocompletado en IDEs y tipado fuerte.
+  - Integración con los sistemas:
+    - `AppDurationsSystem` – Duraciones base y específicas por feature.
+    - `FontSizesSystem` – Jerarquía tipográfica (display, headline, title, body, label, caption).
+    - `AppRadiusSystem` – Bordes redondeados, esquinas parciales y helpers para shapes.
+    - `AppSizesSystem` – Tamaños, elevaciones, opacidades y breakpoints responsivos.
+    - `AppSpacingSystem` – Espaciado, padding, margin y gaps automáticos.
+    - `AppUISystem` – Acceso jerárquico a constantes de UI (elevaciones, opacidades, iconos, avatares, breakpoints, aspect ratios).
+
+### Changed
+- Documentación extendida en `constants.dart` para incluir ejemplos de uso de `Consts` en todos los sistemas.
+- Estandarización de la jerarquía de acceso y nomenclatura en los sistemas de constantes.
+- Mejora en la coherencia de documentación y ejemplos entre `AppSizesSystem`, `AppSpacingSystem`, `AppUISystem` y `Consts`.
+
 ## [2.0.1] - 2025-10-28
 ### Fixed
 - Corrección menor en la documentación del paquete
@@ -110,4 +131,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 - N/A
-

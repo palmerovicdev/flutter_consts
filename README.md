@@ -19,14 +19,15 @@ Sistema completo de constantes de diseño para aplicaciones Flutter. Mantén con
 - 🎨 **Material Design 3** - Compatible con las últimas guías de diseño
 - 🚀 **Optimizado** - Todo const para máximo rendimiento
 - 📖 **Documentado** - Cada constante incluye documentación
+- ⛲️ **Punto de acceso central** - Clase `Consts` para todas las constantes
 
 ## 📦 Instalación
-  consts: ^2.0.0
+  consts: ^3.0.0
 Agrega esto a tu `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  consts: ^2.0.0
+  consts: ^3.0.0
 ```
 
 Luego ejecuta:
@@ -75,6 +76,232 @@ Container(
     ],
   ),
 )
+```
+
+## 🧭 Punto de acceso central: `Consts`
+
+El paquete ahora expone un **punto de acceso unificado** para todas las constantes jerárquicas de diseño. Úsalo para descubrir rápido por autocompletado y mantener la consistencia.
+
+```dart
+/// Punto de acceso central para todas las constantes de diseño
+///
+/// **Uso:**
+/// ```dart
+/// // Duraciones
+/// Consts.durations.base.md  // 300ms
+/// Consts.durations.feat.searchDebounce  // 300ms
+/// ```
+class Consts {
+  Consts._();
+
+  /// Sistema de duraciones para animaciones y transiciones
+  ///
+  /// **Uso:**
+  /// ```dart
+  /// // Duraciones base
+  /// AnimatedContainer(
+  ///   duration: Consts.durations.base.md,  // 300ms
+  ///   child: Widget(),
+  /// )
+  ///
+  /// // Duraciones específicas de features
+  /// Timer(Consts.durations.feat.searchDebounce, callback);
+  /// ```
+  static AppDurationsSystem get durations => AppDurationsSystem();
+
+  /// Sistema de tamaños de fuente tipográficos jerárquicos
+  ///
+  /// **Uso:**
+  /// ```dart
+  /// // Tamaños por categoría
+  /// Text(
+  ///   'Título',
+  ///   style: TextStyle(fontSize: Consts.fontSizes.display.lg),  // 57.0
+  /// )
+  ///
+  /// Text(
+  ///   'Subtítulo',
+  ///   style: TextStyle(fontSize: Consts.fontSizes.headline.md),  // 28.0
+  /// )
+  ///
+  /// Text(
+  ///   'Cuerpo',
+  ///   style: TextStyle(fontSize: Consts.fontSizes.body.md),  // 14.0
+  /// )
+  ///
+  /// // Tamaños especiales
+  /// Text(
+  ///   'Etiqueta',
+  ///   style: TextStyle(fontSize: Consts.fontSizes.label.lg),  // 14.0
+  /// )
+  /// ```
+  static FontSizesSystem get fontSizes => FontSizesSystem();
+
+  /// Sistema de radius para bordes redondeados y formas
+  ///
+  /// **Uso:**
+  /// ```dart
+  /// // Valores base (double)
+  /// double radiusValue = Consts.radius.base.md;  // 12.0
+  ///
+  /// // BorderRadius para contenedores
+  /// Container(
+  ///   decoration: BoxDecoration(
+  ///     borderRadius: Consts.radius.containers.lg,  // BorderRadius.circular(16.0)
+  ///   ),
+  /// )
+  ///
+  /// // Radius individuales para esquinas específicas
+  /// Container(
+  ///   decoration: BoxDecoration(
+  ///     borderRadius: BorderRadius.only(
+  ///       topLeft: Consts.radius.corners.md,
+  ///       topRight: Consts.radius.corners.lg,
+  ///     ),
+  ///   ),
+  /// )
+  ///
+  /// // RoundedRectangleBorder para shapes
+  /// Card(
+  ///   shape: Consts.radius.shapes.md,
+  /// )
+  ///
+  /// // Métodos helper para radius parciales
+  /// Container(
+  ///   decoration: BoxDecoration(
+  ///     borderRadius: Consts.radius.partial.onlyTop(16.0),
+  ///   ),
+  /// )
+  ///
+  /// // Radius pre-configurados
+  /// showModalBottomSheet(
+  ///   shape: RoundedRectangleBorder(
+  ///     borderRadius: Consts.radius.only.top.rightXl,
+  ///   ),
+  /// )
+  /// ```
+  static AppRadiusSystem get radius => AppRadiusSystem();
+
+  /// Sistema de tamaños base para toda la aplicación
+  ///
+  /// **Uso:**
+  /// ```dart
+  /// // Tamaños base
+  /// Container(
+  ///   width: Consts.sizes.base.md,    // 12.0
+  ///   height: Consts.sizes.base.lg,   // 16.0
+  /// )
+  ///
+  /// // Iconos
+  /// Icon(
+  ///   Icons.home,
+  ///   size: Consts.sizes.icons.lg,  // 24.0
+  /// )
+  ///
+  /// // Avatares
+  /// CircleAvatar(
+  ///   radius: Consts.sizes.avatars.md,  // 40.0
+  ///   child: Text('AB'),
+  /// )
+  ///
+  /// // Breakpoints responsivos
+  /// final width = MediaQuery.of(context).size.width;
+  /// if (width < Consts.sizes.breakpoints.mobile) {
+  ///   // Layout móvil (< 600px)
+  /// } else if (width < Consts.sizes.breakpoints.tablet) {
+  ///   // Layout tablet (< 900px)
+  /// } else {
+  ///   // Layout desktop
+  /// }
+  ///
+  /// // Elevaciones Material Design
+  /// Card(
+  ///   elevation: Consts.sizes.elevations.md,  // 4.0
+  ///   child: ...,
+  /// )
+  ///
+  /// // Opacidades Material Design
+  /// Opacity(
+  ///   opacity: Consts.sizes.opacities.disabled,  // 0.38
+  ///   child: Text('Deshabilitado'),
+  /// )
+  ///
+  /// // Aspect Ratios
+  /// AspectRatio(
+  ///   aspectRatio: Consts.sizes.aspectRatios.wide,  // 16:9
+  ///   child: Image.network('url'),
+  /// )
+  /// ```
+  static AppSizesSystem get sizes => AppSizesSystem();
+
+  /// Sistema de espaciado para padding, margin y gaps
+  ///
+  /// **Uso:**
+  /// ```dart
+  /// // Valores base (double)
+  /// double spacing = Consts.spacing.base.md;  // 12.0
+  ///
+  /// // Padding uniforme en todos los lados
+  /// Padding(
+  ///   padding: Consts.spacing.padding.lg,  // EdgeInsets.all(16.0)
+  ///   child: Text('Contenido'),
+  /// )
+  ///
+  /// // Padding horizontal
+  /// Container(
+  ///   padding: Consts.spacing.horizontal.lg,  // EdgeInsets.symmetric(horizontal: 16.0)
+  ///   child: Row(children: [...]),
+  /// )
+  ///
+  /// // Padding vertical
+  /// Container(
+  ///   padding: Consts.spacing.vertical.md,  // EdgeInsets.symmetric(vertical: 12.0)
+  ///   child: Column(children: [...]),
+  /// )
+  ///
+  /// // Gaps verticales (Column)
+  /// Column(
+  ///   children: [
+  ///     Text('Item 1'),
+  ///     Consts.spacing.gap.md,  // SizedBox(height: 12.0)
+  ///     Text('Item 2'),
+  ///     Consts.spacing.gap.lg,  // SizedBox(height: 16.0)
+  ///     Text('Item 3'),
+  ///   ],
+  /// )
+  ///
+  /// // Gaps horizontales (Row)
+  /// Row(
+  ///   children: [
+  ///     Icon(Icons.star),
+  ///     Consts.spacing.gapHorizontal.sm,  // SizedBox(width: 6.0)
+  ///     Text('5.0'),
+  ///   ],
+  /// )
+  /// ```
+  static AppSpacingSystem get spacing => AppSpacingSystem();
+
+  /// Sistema jerárquico de UI (elevaciones, opacidades, iconos, avatares,
+  /// breakpoints y aspect ratios) con autocompletado por categorías.
+  ///
+  /// **Uso:**
+  /// ```dart
+  /// // Elevaciones
+  /// Card(elevation: Consts.ui.elevations.md);
+  ///
+  /// // Opacidades
+  /// Opacity(opacity: Consts.ui.opacities.high);
+  ///
+  /// // Iconos y Avatares
+  /// Icon(Icons.home, size: Consts.ui.icons.lg);
+  /// CircleAvatar(radius: Consts.ui.avatars.md);
+  ///
+  /// // Breakpoints y Aspect Ratios
+  /// final isMobile = MediaQuery.of(context).size.width < Consts.ui.breakpoints.mobile;
+  /// AspectRatio(aspectRatio: Consts.ui.aspectRatios.wide);
+  /// ```
+  static AppUISystem get ui => AppUISystem();
+}
 ```
 
 ## 📐 Sistemas Disponibles
@@ -838,5 +1065,5 @@ Inspirado en sistemas de diseño de:
 
 **Hecho con ❤️ para la comunidad Flutter**
 
-> **Versión 2.0.0** - Ahora con sistema tipográfico completo, diseño responsive y Material Design 3
+> **Versión 3.0.0** - Ahora con sistema tipográfico completo, diseño responsive y Material Design 3
 
