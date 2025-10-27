@@ -60,6 +60,7 @@ import 'package:consts/constants/app_font_sizes.dart';
 import 'app_durations.dart';
 import 'app_radius.dart';
 import 'app_sizes.dart';
+import 'app_spacing.dart';
 
 export 'app_durations.dart';
 export 'app_font_sizes.dart';
@@ -218,6 +219,53 @@ class Consts {
   /// )
   /// ```
   static AppSizesSystem get sizes => AppSizesSystem();
+
+  /// Sistema de espaciado para padding, margin y gaps
+  ///
+  /// **Uso:**
+  /// ```dart
+  /// // Valores base (double)
+  /// double spacing = Consts.spacing.base.md;  // 12.0
+  ///
+  /// // Padding uniforme en todos los lados
+  /// Padding(
+  ///   padding: Consts.spacing.padding.lg,  // EdgeInsets.all(16.0)
+  ///   child: Text('Contenido'),
+  /// )
+  ///
+  /// // Padding horizontal
+  /// Container(
+  ///   padding: Consts.spacing.horizontal.lg,  // EdgeInsets.symmetric(horizontal: 16.0)
+  ///   child: Row(children: [...]),
+  /// )
+  ///
+  /// // Padding vertical
+  /// Container(
+  ///   padding: Consts.spacing.vertical.md,  // EdgeInsets.symmetric(vertical: 12.0)
+  ///   child: Column(children: [...]),
+  /// )
+  ///
+  /// // Gaps verticales (Column)
+  /// Column(
+  ///   children: [
+  ///     Text('Item 1'),
+  ///     Consts.spacing.gap.md,  // SizedBox(height: 12.0)
+  ///     Text('Item 2'),
+  ///     Consts.spacing.gap.lg,  // SizedBox(height: 16.0)
+  ///     Text('Item 3'),
+  ///   ],
+  /// )
+  ///
+  /// // Gaps horizontales (Row)
+  /// Row(
+  ///   children: [
+  ///     Icon(Icons.star),
+  ///     Consts.spacing.gapHorizontal.sm,  // SizedBox(width: 6.0)
+  ///     Text('5.0'),
+  ///   ],
+  /// )
+  /// ```
+  static AppSpacingSystem get spacing => AppSpacingSystem();
 }
 
 
