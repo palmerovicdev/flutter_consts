@@ -1,0 +1,89 @@
+name: Build Flutter Web Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      BUILD_DIR: example/build/web
+      BLUEPRINTS_DIR: example/blueprints
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract version from tag or commit
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            echo "VERSION=${GITHUB_REF_NAME}" >> "$GITHUB_ENV"
+          else
+            echo "VERSION=dev-${GITHUB_SHA::7}" >> "$GITHUB_ENV"
+          fi
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies (root)
+        run: flutter pub get
+
+      - name: Install dependencies (example)
+        run: |
+          cd example
+          flutter pub get
+
+      - name: Build web app (example)
+        run: |
+          cd example
+          flutter build web --release --base-href "/"
+
+      - name: Copy blueprints files to build/web
+        run: |
+          # Copiar archivos de blueprints a la raíz del build
+          cp "${BLUEPRINTS_DIR}/package.json" "${BUILD_DIR}/"
+          cp "${BLUEPRINTS_DIR}/app.js" "${BUILD_DIR}/"
+          cp "${BLUEPRINTS_DIR}/nixpacks.toml" "${BUILD_DIR}/"
+          
+          # Si existe version.json, también copiarlo
+          if [ -f "${BLUEPRINTS_DIR}/version.json" ]; then
+            cp "${BLUEPRINTS_DIR}/version.json" "${BUILD_DIR}/"
+          fi
+          
+          echo "✅ Blueprints files copied to ${BUILD_DIR}"
+          ls -la "${BUILD_DIR}"
+
+      - name: Commit build changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          git add example/build/web
+          
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git commit -m "🚀 Build web app (${VERSION})"
+            git push origin main
+            echo "✅ Build committed and pushed successfully"
+          else
+            echo "ℹ️  No changes to commit."
+          fi
+
+      - name: Build summary
+        run: |
+          echo "## 🎉 Build Complete!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Version**: ${VERSION}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${GITHUB_SHA::7}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📦 Files Built:" >> $GITHUB_STEP_SUMMARY
+          echo "- Flutter Web Build (example/build/web)" >> $GITHUB_STEP_SUMMARY
+          echo "- Blueprints copied: package.json, app.js, nixpacks.toml" >> $GITHUB_STEP_SUMMARY
+

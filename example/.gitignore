@@ -31,7 +31,10 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+!/build/web/
 /coverage/
+
+# Note: build/web is tracked for deployment, other build folders are ignored
 
 # Symbolication related
 app.*.symbols
@@ -43,3 +46,4 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+!/build/

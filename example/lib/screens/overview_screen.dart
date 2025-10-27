@@ -35,7 +35,7 @@ class OverviewPage extends StatelessWidget {
               AnimatedText(
                 text: 'Consts - Flutter',
                 splitType: SplitType.char,
-                animationType: AnimationType.blur,
+                animationType: AnimationType.rotateVertical,
                 duration: Duration(milliseconds: 500),
                 curve: Curves.fastEaseInToSlowEaseOut,
                 fontSize: context.getResponsiveFontSize(
