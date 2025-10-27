@@ -58,6 +58,7 @@ library constants;
 import 'package:consts/constants/app_font_sizes.dart';
 
 import 'app_durations.dart';
+import 'app_radius.dart';
 
 export 'app_durations.dart';
 export 'app_font_sizes.dart';
@@ -93,6 +94,8 @@ class Consts {
   static AppDurationsSystem get durations => AppDurationsSystem();
 
   static FontSizesSystem get fontSizes => FontSizesSystem();
+
+  static AppRadiusSystem get radius => AppRadiusSystem();
 }
 
 
