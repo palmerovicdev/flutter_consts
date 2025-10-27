@@ -33,13 +33,13 @@ class OverviewPage extends StatelessWidget {
               SizedBox(height: isNarrow ? 24 : 32),
 
               AnimatedText(
-                text: 'Flutter Const',
+                text: 'Consts - Flutter',
                 splitType: SplitType.char,
                 animationType: AnimationType.blur,
                 duration: Duration(milliseconds: 500),
                 curve: Curves.fastEaseInToSlowEaseOut,
                 fontSize: context.getResponsiveFontSize(
-                  smallest: AppFontSizesConstants.header,
+                  smallest: AppFontSizesConstants.paragraphTitle,
                   largest: AppFontSizesConstants.h1,
                 ),
                 autoPlay: true,
